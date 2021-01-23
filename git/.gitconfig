@@ -1,0 +1,15 @@
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[user]
+	name = Voovs Selin
+	email = Voovs.13@gmail.com
+[core]
+	editor = vim 
+	excludesfile = /Users/vselin/.gitignore_global
+[color]
+	ui = true
+[alias]
+	praise = blame
