@@ -174,21 +174,29 @@ cgn .  replaces next selections in the same way
 J   combines next line with the current
 
 #Brew
-##General
-brew search {drink}
-brew info {drink}
-brew update
-brew upgrade {drink}
-
-##Formulae
+## terminology
+	brew — a macos/linux package manager
+	formula — usually a small command line tool
+	cask - usually a graphical macos app, like chrome
+	{drink} - the name of a cask or formula
 brew list
-brew install bat
-brew uninstall bat
-
-##Casks
-brew cask list
-brew cask install {drink}
-brew cask uninstall {drink}
-
-##Updates
-
+	Lists all installed formula and casks
+brew search {drink}
+	Searches taps for formula/cask
+brew info {drink}
+	Shows info for a formula/caks
+brew install {bat}
+	Installs a given formula
+brew install --cask {alacritty}
+	Installs a given cask
+brew uninstall {bat}
+	Uninstalls formula. Add --cask for casks
+brew update
+	Synchronizes your brew with brew servers
+	Note: This doesn't "update" your casks
+brew upgrade {drink}
+	"updates" your casks. Running with
+	no arguments "updates" all casks
+man brew
+	Shows all possible brew commands, 
+	including advanced ones

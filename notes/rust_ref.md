@@ -11,7 +11,7 @@ https://www.naut.ca/blog/2020/08/26/ubuntu-vm-on-macos-with-libvirt-qemu/
 http://intermezzos.github.io/book/first-edition/preface.html
 https://www.zero2prod.com/
 https://os.phil-opp.com/
-6.824 Distributed systems
+6.824 Distributed systems https://pdos.csail.mit.edu/6.824/labs/lab-mr.html
 https://rust-unofficial.github.io/too-many-lists/
 https://fasterthanli.me/series
 
