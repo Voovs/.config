@@ -143,6 +143,59 @@ g{case}{motion}  applies {case} to {motion}
 
 :noh  disables highlighting until next search
 
+## Buffers Windows and Tabs
+set hidden
+	Put that in your .vimrc to not go insane
+
+Buffer
+	An open file handle by vim. Active and 
+	hidden buffers are loaded in memory
+:ls :buffers :files
+	Lists all active, inactive and hidden buffers
+:bnext :bprev :buffer $NAME :buffer$NUM
+	Switches buffer
+<C-O> || <C-I>
+	Works inbetween buffers too! Jump to
+	last active cursor spot
+:e $PATH :edit $PATH
+	Opens a new buffer for the file
+
+Window
+	Viewport into buffer. Windows are not
+	tied to buffers and can switch independently
+<C-W> s || <C-W> <C-S> 
+	Splits current window horizontally
+:[N]new $PATH  :[N]sp[lit] $PATH
+	Splits window horizontally and switches
+	active window to the newly opened file.
+	N is the window height. Default is half
+<C-W> v || <C-W> <C-V> 
+	Splits current window vertically
+:[N]vnew $PATH  :[N]vsp[lit] $PATH
+	Splits window vertically and switches
+	active window to the newly opened file.
+	N is the window width. Default is half
+<C-W> c || <C-W> <C-C>
+	Closes current window
+<C-W> o
+	Maximize active window
+<C-W> h/j/k/l
+	Navigate to different window
+<C-W> H/J/K/L
+	Move window
+
+Tabs
+	Collections of windows. On startup
+	pass `-p` to open a tab for each file
+:tabnew $PATH
+	Creates a new tab with one window
+	for the active file
+gt[N]
+	Go one tab right. If $N is specified,
+	got to tab number $N
+gT
+	Go one tab left
+
 ##General rulebook
 ~/.vimrc  see for startup commands
 

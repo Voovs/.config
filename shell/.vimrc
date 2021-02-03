@@ -4,10 +4,15 @@
 set number relativenumber
 set scrolloff=2
 
+"Interactive mouse
+set mouse=a
+map <ScrollWheelUp> <C-Y>
+map <ScrollWheelUp> <C-E> 
+
 " ========================================================
 " # Keyboard shortcuts
 " ========================================================
-" ; as : for commandline
+" ; as : for commands
 nnoremap ; :
 
 " Ctrl+j and Ctrl+c as Esc
@@ -56,29 +61,43 @@ set shiftwidth=4
 " On pressing tab, insert 4 spaces
 " set expandtab
 
-set hlsearch
-
-syntax enable
 if has('gui_running')
-	set number
 	set nowrap
-    set background=light
-    colorscheme base16-gruvbox-dark-pale
-	set number relativenumber
-else
-	colo solarized
-    colo base16-atelier-cave
 endif
+
+" ========================================================
+" Text visuals
+" ========================================================
+" Syntax and search highlighting
+syntax enable
+set hlsearch
 
 set guifont=Menlo\ Regular:h16
 
+" Syntax theme
+set background="dark"
+let base16colorspace=256
+colorscheme base16-gruvbox-dark-pale
+syntax on
+set termguicolors
 
+" ========================================================
+" Experimental
+" ========================================================
+
+"Utilities
+" Allow buffers to be hidden
+set hidden
+
+" Save folds when closing buffer
+" NOTE: Very buggy. Don't rely on it, especially with macvim
 augroup remember_folds
 	autocmd!
 	autocmd BufWinLeave * mkview
 	autocmd BufWinEnter * silent! loadview
 augroup END
 
+" Autocompletion for wrappers
 " inoremap " ""<left>
 " inoremap ' ''<left>
 " inoremap ( ()<left>
