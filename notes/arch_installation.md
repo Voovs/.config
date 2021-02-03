@@ -258,3 +258,36 @@ paru -S ttf-mac-fonts
 	Installs mac fonts. Just a good test for if paru works
 reboot
 	Rebooting will boot you into your graphical desktop
+
+## SSH setup
+*if trapped in gui land*
+sudo systemctl disable gdm
+	Disables automatic gdm. Check if it's enabled first with
+	`status`. Now when you reboot, you'll start in shell.
+	NOTE: you can still setup ssh from a GUI terminal
+*done*
+*on qemu*
+-nic user,hostfwd=tcp::10022-:22
+	Option forwards guest port 22 to host port 10022
+*done*
+[pacman -Qs ssh | pacman -Qi openssh]
+	Either command should show openssh installed. Otherwise,
+	install it with `-S`
+systemctl start sshd
+	Activates the ssh daemon. Use `enable` to start on boot
+systemctl status sshd
+	Lists the status, which should be active
+*on client*
+ssh -p 10022 vselin@localhost
+	Replace `vselin` with the user you want to log into. 
+	Replace `10022` with the port connected to the server
+*done*
+
+## Additional reference
+Step by step ssh guide I followed
+https://www.reddit.com/r/linuxquestions/comments/51wlcr/how_do_i_sshrdesktop_to_my_qemu_vm_from_my_host/
+Lots of pre-baked formual for ssh and nongraphical boots
+https://fadeevab.com/how-to-setup-qemu-output-to-console-and-automate-using-shell-script/
+
+Maybe better?
+http://nickdesaulniers.github.io/blog/2018/10/24/booting-a-custom-linux-kernel-in-qemu-and-debugging-it-with-gdb/
