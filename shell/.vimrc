@@ -1,13 +1,28 @@
 " ========================================================
 " # GUI settings
 " ========================================================
+" Relative numbering, except for current line
 set number relativenumber
+
+" Scroll before hitting edge
 set scrolloff=2
 
 "Interactive mouse
 set mouse=a
 map <ScrollWheelUp> <C-Y>
 map <ScrollWheelUp> <C-E> 
+
+" set showmatch " Enabling this lags Neovim hard
+
+" More natural window splitting
+set splitbelow
+set splitright
+
+" Tail of active buffer
+set guitablabel=%t " Does not work for airline
+
+" 80 char marker
+set colorcolumn=80
 
 " ========================================================
 " # Keyboard shortcuts
@@ -53,13 +68,16 @@ set backspace=eol,start,indent
 
 let $BASH_ENV = "~/.bash_aliases"
 
-filetype plugin indent on
-" show existing tab with 4 spaces width
-set tabstop=4
-" when indenting with '>', use 4 spaces width
-set shiftwidth=4
-" On pressing tab, insert 4 spaces
-" set expandtab
+
+filetype plugin indent on " Vim's auto-indenting is broken without this
+
+" Tabs to spaces
+set tabstop=4       " number of spaces per TAB
+set softtabstop=4   " number of spaces in tab when editing
+set shiftwidth=4    " number of spaces to use for autoindent
+set expandtab       " tabs are space
+set autoindent
+set copyindent      " copy indent from the previous line
 
 if has('gui_running')
 	set nowrap

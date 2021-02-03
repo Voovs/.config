@@ -80,12 +80,12 @@ r  replace character
 x  delete character
 X  backspace
 c{motion}  insert: deletes motion
-s  cl 
+s  cl
 S  dd + O
 
 u     undo
 ^r    redo
-:^r:  redo last command	
+:^r:  redo last command
 
 ##Folding
 zf  create fold from selection
@@ -144,7 +144,7 @@ set hidden
 	Put that in your .vimrc to not go insane
 
 Buffer
-	An open file handle by vim. Active and 
+	An open file handle by vim. Active and
 	hidden buffers are loaded in memory
 :ls :buffers :files
 	Lists all active, inactive and hidden buffers
@@ -159,15 +159,16 @@ Buffer
 Window
 	Viewport into buffer. Windows are not
 	tied to buffers and can switch independently
-<C-W> s || <C-W> <C-S> 
+<C-W> s || <C-W> <C-S>
 	Splits current window horizontally
 :[N]new $PATH  :[N]sp[lit] $PATH
 	Splits window horizontally and switches
 	active window to the newly opened file.
 	N is the window height. Default is half
-<C-W> v || <C-W> <C-V> 
+<C-W> v || <C-W> <C-V>
 	Splits current window vertically
 :[N]vnew $PATH  :[N]vsp[lit] $PATH
+	fsjlkfdsj
 	Splits window vertically and switches
 	active window to the newly opened file.
 	N is the window width. Default is half
@@ -175,6 +176,8 @@ Window
 	Closes current window
 <C-W> o
 	Maximize active window
+<C-W> T
+	Move active window to its own tab
 <C-W> h/j/k/l
 	Navigate to different window
 <C-W> H/J/K/L
