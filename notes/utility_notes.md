@@ -8,10 +8,6 @@
 ##    General rulebook
 ##    Indentation
 ##    Obscure and useful
-# brew
-##    General
-##    Formulae
-##    Casks
 
 
 #bc
@@ -226,30 +222,13 @@ zz  centers curr line on screen
 cgn .  replaces next selections in the same way
 J   combines next line with the current
 
-#Brew
-## terminology
-	brew — a macos/linux package manager
-	formula — usually a small command line tool
-	cask - usually a graphical macos app, like chrome
-	{drink} - the name of a cask or formula
-brew list
-	Lists all installed formula and casks
-brew search {drink}
-	Searches taps for formula/cask
-brew info {drink}
-	Shows info for a formula/caks
-brew install {bat}
-	Installs a given formula
-brew install --cask {alacritty}
-	Installs a given cask
-brew uninstall {bat}
-	Uninstalls formula. Add --cask for casks
-brew update
-	Synchronizes your brew with brew servers
-	Note: This doesn't "update" your casks
-brew upgrade {drink}
-	"updates" your casks. Running with
-	no arguments "updates" all casks
-man brew
-	Shows all possible brew commands, 
-	including advanced ones
+# Awk the programming language/utility
+## Recipes
+awk 'END { print NR;}'
+	Counts the lines, for example in a file
+awk '/^[0-9]{2}/ { print NR;}'
+	Prints the line numbers of lines starting
+	with 2 consecutive digits
+awk 'match($0, /[0-9]{6}/) { print substr($0, RSTART, RLENGTH);}'
+	Extracts the first 6-digit number from
+	each line and prints it to stdout
