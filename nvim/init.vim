@@ -2,6 +2,14 @@
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 source ~/.vimrc
+
+" Welcome prompt for seperating source error messages
+echom ">^.^<"
+
+" Open nvim/init.vim for quick editing
+nnoremap <leader>nvim :vsplit $MYVIMRC<CR><C-w>H
+nnoremap <leader>nvims :source $MYVIMRC<CR>:x<CR>
+
 " =============================================
 " Install plugins
 " =============================================
@@ -13,6 +21,9 @@ Plug 'vim-airline/vim-airline-themes'
 " Plug 'junegunn/fzf'
 " Plug 'junegunn/fzf.vim'
 
+" See tailing spaces
+Plug 'Yggdroot/indentLine'
+
 " Syntactic language support
 Plug 'rust-lang/rust.vim'
 
@@ -20,7 +31,11 @@ call plug#end()
 
 " Pretty tabs
 let g:airline#extensions#tabline#enabled = 1  " Always display tabs
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+"let g:airline#extensions#tabline#formatter = 'unique_tail_improved' " Temporarily broken?
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#show_buffers = 0 " Don't show buffers
+let g:airline#extensions#tabline#fnamemod = ':t' " Only show file tail
+let g:airline#extensions#tabline#show_splits = 0 " No borders between tabs
 
 if has('nvim')
 	set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor

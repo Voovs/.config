@@ -123,6 +123,12 @@ v   visual: from cursor
 V   visual: line selection
 ^v  visual: square block selection
 
+aw  current word and space after it
+iw  current word
+
+i(  inside (..)
+ib  inside block (..) [..] {..}
+
 /query  ^f for query
 
 N   previous match
@@ -133,6 +139,7 @@ n   next match
 gv  reselect previous selection
 
 u  turns visual to lowercase
+U  turns visual to lowercase
 ~  switches case of visual
 U  turns visual to uppercase
 g{case}{motion}  applies {case} to {motion}
@@ -182,6 +189,16 @@ Window
 	Navigate to different window
 <C-W> H/J/K/L
 	Move window
+<C-W> +/-
+	Increase/Decrease window height
+<C-W> >/<
+	Increase/Decrease window width
+`N<C-W>_`
+	Set window height to N
+N<C-W> |
+	Set window width to N
+<C-W> =
+	Set all windows to equalish size
 
 Tabs
 	Collections of windows. On startup
@@ -219,11 +236,15 @@ gT
 ##Obscure and useful
 cw  deletes the next word and INSERT
 cf{c}  deletes up to and including {c} INSERT
+ct{c}  deletes up to {c} INSERT
 c$  delets line and INSERT
 o   opens new line below
 zz  centers curr line on screen
 cgn .  replaces next selections in the same way
 J   combines next line with the current
+
+## Reading material
+https://learnvimscriptthehardway.stevelosh.com/
 
 # Awk the programming language/utility
 ## Recipes
