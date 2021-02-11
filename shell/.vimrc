@@ -1,6 +1,6 @@
 " ========================================================
 " # GUI settings
-" ========================================================
+" ====================================================={{{
 " Relative numbering, except for current line
 set number relativenumber
 
@@ -26,10 +26,11 @@ set guitablabel=%t " Does not work for airline
 
 " 80 char marker
 set colorcolumn=80
+" }}}
 
 " ========================================================
 " # Keyboard shortcuts
-" ========================================================
+" ====================================================={{{
 " ; as : for commands
 nnoremap ; :
 
@@ -64,6 +65,9 @@ noremap L $
 nnoremap j gj
 nnoremap k gk
 
+" Bash-like command line navigation
+cnoremap <C-a> <C-b>
+
 " Window control with leader
 nnoremap <leader>w <C-w>
 
@@ -73,15 +77,18 @@ nnoremap <leader>j <C-w>j
 nnoremap <leader>k <C-w>k
 nnoremap <leader>l <C-w>l
 
-    " Window resizing
-nnoremap <leader>, 10<C-w><
-nnoremap <leader>. 10<C-w>>
-nnoremap <leader>< 10<C-w>+
-nnoremap <leader>> 10<C-w>-
+    " Window movement
+nnoremap <leader><leader>h <C-w>H
+nnoremap <leader><leader>j <C-w>J
+nnoremap <leader><leader>k <C-w>K
+nnoremap <leader><leader>l <C-w>L
 
-" Open .vimrc for quick editing
-nnoremap <leader>vim :vsplit ~/.vimrc<CR><C-w>H
-nnoremap <leader>vims :source ~/.vimrc<CR>:x<CR>
+    " Window resizing
+    " < increases, > decreases
+nnoremap <leader>, 10<C-w>>
+nnoremap <leader>. 10<C-w><
+nnoremap <leader><leader>, 10<C-w>+
+nnoremap <leader><leader>. 10<C-w>-
 
 " Case insensitive search
 nnoremap <leader>/ /\c
@@ -89,64 +96,53 @@ nnoremap <leader>/ /\c
 " Uppercase previous word from Insert mode
 inoremap <C-u> <ESC>vbU`>a
 
-set whichwrap+=>,l " wraps up a line on right key
-set whichwrap+=<,h " wraps up a line on left key
-
-set backspace=eol,start,indent
-
-let $BASH_ENV = "~/.bash_aliases"
-
-
-filetype plugin indent on " Vim's auto-indenting is broken without this
-
-" Tabs to spaces
-set tabstop=4       " number of spaces per TAB
-set softtabstop=4   " number of spaces in tab when editing
-set shiftwidth=4    " number of spaces to use for autoindent
-set expandtab       " tabs are space
-set autoindent
-set copyindent      " copy indent from the previous line
-
-if has('gui_running')
-	set nowrap
-endif
+" }}}
 
 " ========================================================
 " Text visuals
-" ========================================================
+" ====================================================={{{
 " Syntax and search highlighting
 syntax enable
-set hlsearch
+set hlsearch incsearch
 
 set guifont=Menlo\ Regular:h16
 
 " Syntax theme
 set background="dark"
 let base16colorspace=256
-colorscheme base16-gruvbox-dark-pale
+colorscheme base16-gruvbox-dark-pale " From base16 vim repo
 syntax on
-set termguicolors
+set termguicolors " Actual colors
+
+" }}}
 
 " ========================================================
 " Language specific
-" ========================================================
+" ====================================================={{{
 autocmd Filetype rust set colorcolumn=100 
 autocmd Filetype markdown set wrap
-autocmd Filetype markdown set spell
+autocmd Filetype markdown set linebreak " Wrap on words
+autocmd Filetype markdown set spell " Noticable slowdown
 
-au Filetype python iabbrev #! #!/usr/local/bin/python3
+au Filetype python iabbrev <buffer> #! #!/usr/local/bin/python3
+" Bug fix for python interpreter seeing #!.../python3^M
+au Filetype python set fileformat=unix
 
 " Motion to construct name
 augroup function_name
     " function and class names
     au Filetype python onoremap ih :execute ":normal! ?def [A-z]\\+(\\\|class [A-Z][A-z]*\\(:\\\|(\\)\r:noh\rwve"<CR>
+    "au Filetype python onoremap ih :execute ':normal! ?def [A-z]\+(\|class [A-Z][A-z]*\(:\|(\)' . "\r" . ":noh\rwve"<CR>
     " fn, struct, and enum names
     au Filetype rust onoremap ih :execute ":normal! ?fn [a-z]\\+\\\|\\(struct\\\|enum\\) [A-Z]\r:noh\rwve"<CR>
+    "au Filetype vim onoremap ih :execute ":normal! ?function [a-z]!?\\+\r:noh\rwve"<CR>
 augroup END
+
+" }}}
 
 " ========================================================
 " Experimental
-" ========================================================
+" ========================================================{{{
 
 "Utilities
 " Allow buffers to be hidden
@@ -154,7 +150,7 @@ set hidden
 
 " Spelling substitutions
 iabbrev em —
-iabbrev @@ vselin12@gmail.com
+iabbrev @@! vselin12@gmail.com
 
 " Save folds when closing buffer
 " NOTE: Very buggy. Don't rely on it, especially with macvim
@@ -166,6 +162,20 @@ augroup END
 
 " Clear search entirely
 " let @/ = ""
+
+"TODO: setting up quick grepping. Maybe also matching
+"nnoremap <leader>g :execute "match Todo /" . expand("<cWORD>") . "/"<cr> 
+" Convenience grepping
+" nnoremap <leader>gg :silent execute ":grep! " . shellescape(expand("<cWORD>")) . " ." <CR>:copen 10<CR>
+source ~/.vim/plugin/grep-operator.vim 
+nnoremap <leader>gn :execute ":normal! :cnext\r"<CR>
+nnoremap <leader>gN :execute ":normal! :cprevious\r"<CR>
+
+set backspace=eol,start,indent " ???
+
+" Use aliases for shell commands. Kinda unnecessary
+let $BASH_ENV = "~/.bash_aliases"
+
 
 " Autocompletion for wrappers
 " inoremap " ""<left>
@@ -183,3 +193,40 @@ augroup END
 " shine - citrus equivelent for vim. Nice for lightmode
 " peachpuff - autumn colors. Maybe useable in a light terminal
 " base16-tomorrow-night - my classic atom dark theme
+
+" }}}
+
+" ========================================================
+" Global configs (unlikely to change)
+" ========================================================{{{
+" Tidy vimrc with folds
+augroup vimrc_folds
+    " Mark folds with {{{
+    au Filetype vim setlocal foldmethod=marker
+    " Open .vim files folded
+    au Filetype vim,BufReadPre setlocal foldlevelstart=0
+augroup END
+
+" Open .vimrc for quick editing
+command! Vim :normal! :vsplit ~/.vimrc<CR><C-w>H
+command! Vims :normal! :w<CR>:source ~/.vimrc<CR>:x<CR>
+
+" A place to quickly take a note
+command! Note :split ~/.vim/vim_notepad.md
+
+" Wrap horizontal line movement
+set whichwrap+=>,l " end of line above on h
+set whichwrap+=<,h " start of line below on l
+
+" Tabs to spaces
+set tabstop=4       " number of spaces per TAB
+set softtabstop=4   " number of spaces in tab when editing
+set shiftwidth=4    " number of spaces to use for autoindent
+set expandtab       " tabs are space
+set autoindent
+set copyindent      " copy indent from the previous line
+
+" Vim's auto-indenting is broken without this
+filetype plugin indent on
+
+" }}}

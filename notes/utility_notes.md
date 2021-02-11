@@ -244,7 +244,10 @@ cgn .  replaces next selections in the same way
 J   combines next line with the current
 
 ## Reading material
-https://learnvimscriptthehardway.stevelosh.com/
+Learn vimscript
+    https://learnvimscriptthehardway.stevelosh.com/
+Make your own status bar
+    https://tdaly.co.uk/projects/vim-statusline-generator/
 
 # Awk the programming language/utility
 ## Recipes

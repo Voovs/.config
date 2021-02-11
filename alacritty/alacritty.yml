@@ -5,6 +5,10 @@
 font:
   normal:
     family: Menlo
+    # Backups, if you don't have Menlo
+    # They have more line spacing, at the cost of feeling smaller
+    #family: Monaco
+    #family: Source Code Pro
       #style: Bold
   size: 16.0
   
