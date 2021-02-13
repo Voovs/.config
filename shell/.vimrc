@@ -10,7 +10,7 @@ set scrolloff=2
 "Interactive mouse
 set mouse=a
 map <ScrollWheelUp> <C-Y>
-map <ScrollWheelUp> <C-E> 
+map <ScrollWheelUp> <C-E>
 
 " Fast bracket matches
 set showmatch
@@ -26,6 +26,19 @@ set guitablabel=%t " Does not work for airline
 
 " 80 char marker
 set colorcolumn=80
+
+" Only run in vanilla vim
+if !has('nvim') && !has('gui_running')
+    " Highlight active line in normal mode
+    au InsertEnter,InsertLeave * set cul!
+    set cursorline
+
+    " Line cursor in insert mode
+    " Might not work in some terminals. Might also trap your cursor in block,
+    " even after exiting vim
+    let &t_SI = "\e[6 q"
+    let &t_EI = "\e[2 q"
+endif
 " }}}
 
 " ========================================================
@@ -36,10 +49,6 @@ nnoremap ; :
 
 " Space as leader
 let mapleader = "\<Space>"
-
-" Open hotkeys
-nnoremap <C-p> :files<CR>
-nnoremap <leader>; :buffers<CR>
 
 " Ctrl+k as Esc
 nnoremap <C-k> <ESC>
@@ -60,13 +69,18 @@ nnoremap <C-f> :sus<CR>
 " Jump to line start/end using homerow
 noremap H ^
 noremap L $
- 
+
 " Move by lines
 nnoremap j gj
 nnoremap k gk
 
-" Bash-like command line navigation
+" Bash-like jump to start
 cnoremap <C-a> <C-b>
+
+" Switch buffers with ,h/l
+nnoremap ,h :bnext<CR>
+nnoremap ,l :bnext<CR>
+" nnoremap ,
 
 " Window control with leader
 nnoremap <leader>w <C-w>
@@ -119,7 +133,7 @@ set termguicolors " Actual colors
 " ========================================================
 " Language specific
 " ====================================================={{{
-autocmd Filetype rust set colorcolumn=100 
+autocmd Filetype rust set colorcolumn=100
 autocmd Filetype markdown set wrap
 autocmd Filetype markdown set linebreak " Wrap on words
 autocmd Filetype markdown set spell " Noticable slowdown
@@ -155,19 +169,22 @@ iabbrev @@! vselin12@gmail.com
 " Save folds when closing buffer
 " NOTE: Very buggy. Don't rely on it, especially with macvim
 augroup remember_folds
-	autocmd!
-	autocmd BufWinLeave + mkview
-	autocmd BufWinEnter + silent! loadview
+    autocmd!
+    autocmd BufWinLeave + mkview
+    autocmd BufWinEnter + silent! loadview
 augroup END
 
 " Clear search entirely
 " let @/ = ""
 
-"TODO: setting up quick grepping. Maybe also matching
-"nnoremap <leader>g :execute "match Todo /" . expand("<cWORD>") . "/"<cr> 
+"TODO: Maybe setup matching?
+"nnoremap <leader>g :execute "match Todo /" . expand("<cWORD>") . "/"<cr>
+" From Jonhoo, sets ripgrep as grep
+if executable('rg')
+    set grepprg=rg\ --no-heading\ --vimgrep
+    set grepformat=%f:%l:%c:%m
+endif
 " Convenience grepping
-" nnoremap <leader>gg :silent execute ":grep! " . shellescape(expand("<cWORD>")) . " ." <CR>:copen 10<CR>
-source ~/.vim/plugin/grep-operator.vim 
 nnoremap <leader>gn :execute ":normal! :cnext\r"<CR>
 nnoremap <leader>gN :execute ":normal! :cprevious\r"<CR>
 
