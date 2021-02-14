@@ -4,12 +4,12 @@
 # Fonts 
 font:
   normal:
-    family: Menlo
-    # Backups, if you don't have Menlo
-    # They have more line spacing, at the cost of feeling smaller
+    family: Menlo  # Default fallback font
+    # Alternative monospace fallback fonts
     #family: Monaco
     #family: Source Code Pro
-      #style: Bold
+
+    family: MesloLGM Nerd Font  # Use a Nerd-Font for pretty vim statusline
   size: 16.0
   
   offset:
@@ -89,7 +89,8 @@ window:
       #y: 320
   dimensions:
     columns: 134
-    lines: 43
+    #lines: 43  # For Menlo
+    lines: 36  # For Meslo M
     #columns: 104
     #lines: 37
   padding:

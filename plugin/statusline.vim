@@ -1,7 +1,6 @@
 " Very minimal statusline for vim
 " No plugins beyond vanilla vim 8.0
 
-
 " Set to only run in normal vim
 " Remove if you aren't using another statusline in gui/neo vim
 if !has('nvim') && !has('gui_running')
@@ -22,8 +21,13 @@ let g:StatlnIdleBG = '#222222'
 " Updates statusline colors
 function! ReloadStatlnColors()
     execute 'highlight StatlnPrimaryHL guifg=' . g:StatlnOnPrimaryColor . ' guibg=' . g:StatlnPrimaryColor ' term=bold cterm=bold gui=bold'
+    execute 'highlight StatlnPrimaryToSubtleHL guifg=' . g:StatlnSubtleBG . ' guibg=' . g:StatlnPrimaryColor
+    execute 'highlight StatlnSubtleToPrimaryHL guifg=' . g:StatlnPrimaryColor . ' guibg=' . g:StatlnSubtleBG
     execute 'highlight StatlnSubtleHL guifg=' . g:StatlnSubtle . ' guibg=' . g:StatlnSubtleBG
+    execute 'highlight StatlnSubtleToIdleHL guifg=' . g:StatlnIdleBG . ' guibg=' . g:StatlnSubtleBG
+    execute 'highlight StatlnIdleToSubtleHL guifg=' . g:StatlnSubtleBG . ' guibg=' . g:StatlnIdleBG
     execute 'highlight StatlnIdleHL guifg=' . g:StatlnIdle ' guibg=' . g:StatlnIdleBG
+    execute 'highlight StatlnIdleInverseHL guifg=' . g:StatlnIdleBG ' guibg=' . g:StatlnIdle
 endfunction
 
 " }}}
@@ -46,9 +50,7 @@ endfunction
 
 " Modified buffer indicator
 function! StatlnModified()
-    echom 'before search'
     let l:is_modified = getbufinfo(bufnr('%'))[0].changed
-    echom 'Modified?: ' . l:is_modified
 
     let l:modified_marker = ''
 
@@ -126,39 +128,50 @@ function! ActiveStatusline()
     let &l:stl.='%#StatlnPrimaryHL#'
     let &l:stl.=' '
     let &l:stl.='%{StatlnMode()}' " Current mode
+    let &l:stl.='%#StatlnPrimaryToSubtleHL#'
+    let &l:stl.=' '
     let &l:stl.='%#StatlnSubtleHL#'
     let &l:stl.=' '
 
+    " Powerline:
+    "                     
+    
     " Shows git branch, i there is one
     "let b:git_branch = GitBranch()
     "echom b:git_branch[0] ' ' . ' ' . b:git_branch[1]
     "if b:git_branch[1]
     "    echom 'Setting branch'
-    "    let &stl.='<'
+    "    let &stl.=''
     "    let &stl.='%{b:git_branch[0]}'
-    "    let &stl.='> '
+    "    let &stl.=' '
     "endif
 
     let &l:stl.='%t'
     let &l:stl.=' '
     let &l:stl.='%{StatlnModified()}'
+    let &l:stl.='%#StatlnSubtleToIdleHL#'
+    let &l:stl.=' '
     let &l:stl.='%#StatlnIdleHL#'
 
     " Right side
     let &l:stl.='%=' " Right align
+    let &l:stl.='%#StatlnIdleToSubtleHL#'
+    let &l:stl.=' '
     let &l:stl.='%#StatlnSubtleHL#'
-    let &l:stl.=' '
     let &l:stl.='%y' " File type
-    let &l:stl.=' '
+    "let &l:stl.=' '
+    let &l:stl.='%#StatlnSubtleToPrimaryHL#'
+    let &l:stl.=' '
     let &l:stl.='%#StatlnPrimaryHL#' " Same color as left side displaying mode
-    let &l:stl.=' '
+    "let &l:stl.=' '
     let &l:stl.='%p%%' " Percent through file
     let &l:stl.=' '
     let &l:stl.='%l/%L' " Current / Total lines
-    " %{\uE0B2}
+    let &l:stl.=' '
     "set statusline+=\ File:\ %t%M
     " https://shapeshed.com/vim-statuslines/
     " https://www.reddit.com/r/vim/comments/ld8h2j/i_made_a_status_line_from_scratch_no_plugins_used/
+    "  
 endfunction
 
 
