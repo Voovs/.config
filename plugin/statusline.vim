@@ -113,6 +113,19 @@ function! StatlnMode()
     return b:mode_str . ' '
 endfunction
 
+" Left aligned column number at least 3 characters wide
+" Intended to stop the statusline for expanding for low column numbers
+function! ColumnNumber()
+    let l:nr = col('.')
+
+    if len(l:nr) < 3
+        return printf('%-2S', l:nr)
+    else
+        return l:nr
+    endif
+endfunction
+
+
 " }}}
 
 
@@ -134,7 +147,7 @@ function! ActiveStatusline()
     let &l:stl.=' '
 
     " Powerline:
-    "                     
+    "                    
     
     " Shows git branch, i there is one
     "let b:git_branch = GitBranch()
@@ -165,6 +178,10 @@ function! ActiveStatusline()
     let &l:stl.='%#StatlnPrimaryHL#' " Same color as left side displaying mode
     "let &l:stl.=' '
     let &l:stl.='%p%%' " Percent through file
+    let &l:stl.=' '
+    let &l:stl.='☰'
+    let &l:stl.=' '
+    let &l:stl.='%{ColumnNumber()}' " Column number at least 2 characters wide
     let &l:stl.=' '
     let &l:stl.='%l/%L' " Current / Total lines
     let &l:stl.=' '
