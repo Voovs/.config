@@ -1,0 +1,8 @@
+#TODO: PS1 has a lot of linewrapping problems on all systems
+#PS1='\[\e[0;01m\]\[$(tty | cut -c6-12)\]:\[\e[38;5;225m\]\W \[\e[0;01m\]\u\$\[\e[m\] '
+export PS1='\[\e[0;01m\]\u:\[\e[38;5;225m\]\W \[\e[0;01m\]\[$(tty | cut -c6-12)\]\$\[\e[m\] '
+
+if [ -f ~/.git-prompt.bash ]; then
+  source ~/.git-prompt.bash
+  export PS1='\[\e[0;01m\]\[$(tty | cut -c6-12)\]:\[\e[38;5;225m\]\W \[\e[0;01m\]\[$(__git_ps1 "%s")\]\$\[\e[m\] '
+fi

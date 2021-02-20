@@ -1,0 +1,13 @@
+export PATH="~/bin:~/.cargo/bin:$PATH"
+
+# Ignore duplicates in history common commands
+export HISTCONTROL=ignoreboth
+export HISTIGNORE='history:pwd:exit:ll:ll -a: ls: tree:tty'
+
+# `ls --color` for BSD/macOS systems
+export CLICOLOR=1
+
+# Stop warning about bash deprecation on macos
+if [[ `uname` == 'Darwin' ]]; then
+    export BASH_SILENCE_DEPRECATION_WARNING=1
+fi

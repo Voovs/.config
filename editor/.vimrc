@@ -10,7 +10,7 @@ set scrolloff=2
 "Interactive mouse
 set mouse=a
 map <ScrollWheelUp> <C-Y>
-map <ScrollWheelUp> <C-E>
+map <ScrollWheelDown> <C-E>
 
 " Fast bracket matches
 set showmatch
