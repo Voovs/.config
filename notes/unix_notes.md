@@ -188,6 +188,8 @@ blacklist --help
 nh [6-digit num]
 
 
+    https://medium.com/@webprolific/getting-started-with-dotfiles-43c3602fd789
+How to set up good bash dotfiles
 
 
 
