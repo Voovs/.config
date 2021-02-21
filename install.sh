@@ -13,44 +13,14 @@ fi
 # Softlinks bash dotfiles
 read -p 'Try to softlink bash dotfiles? [Y/n] ' -r
 if [[ ! $REPLY =~ ^[Nn] ]]; then
-    echo 'Attemping to link files...'
+    dotfiles={bash_profile,bash_env,bash_aliases,bash_prompt,bash_functions}
 
-    file_names=(\
-        '.bash_profile' \
-        '.bash_env' \
-        '.bash_aliases' \
-        '.bash_prompt' \
-        '.bash_functions')
-    file_paths=(\
-        $PWD'/shell/bash/.bash_profile' \
-        $PWD'/shell/bash/.bash_env' \
-        $PWD'/shell/bash/.bash_aliases' \
-        $PWD'/shell/bash/.bash_prompt' \
-        $PWD'/shell/bash/.bash_functions')
-
-    failed_links=()
-
-    # Will try to make a symbolic link
-    try_link() {
-        if [[ ! -f "$HOME/$FNAME" ]]; then
-            ln -s $FPATH $HOME/$FNAME
-            echo 'Tried to link  '$FNAME
+    for file in .$dotfiles; do
+        if [[ ! -e ~/$file ]]; then
+            ln -s $PWD'/shell/bash/'$file ~/$file
         else
-            failed_links+=("$FNAME")
+            echo 'Failed to link:'  $file
         fi
-    }
-
-    # Tries to symbolically link all the files in the arrays
-    file_cnt=${#file_names[@]}
-    for ((i = 0; i < file_cnt; i++)); do
-        FNAME=${file_names[i]}
-        FPATH=${file_paths[i]}
-        try_link
-    done
-
-    # Error message for files with already exist
-    for link in "${failed_links[@]}"; do
-        echo 'Failed to link:  '$link
     done
 fi
 
@@ -60,33 +30,39 @@ fi
 # Sets up colorscheme and useful plugin files
 read -p 'Would you like to softlink vim configs? [Y/n] ' -r
 if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-    # Make sure a colors directory exists
-    [[ -d $HOME/.vim/colors ]] || mkdir -p $HOME/.vim/colors
-
-    if [[ ! -e "$HOME/.vim/colors/base16-gruvbox-dark-pale.vim" ]]; then
-        ln -s "$PWD/editor/.vim/colors/base16-gruvbox-dark-pale.vim" \
-            "$HOME/.vim/colors/base16-gruvbox-dark-pale.vim"
+    # Link vim colorscheme
+    vim_colors=$PWD'/editor/vim/colors'
+    if [[ ! -d ~/.vim/colors ]]; then
+        ln -s $vim_colors ~/.vim/colors
+    elif [[ ! -e ~/.vim/colors/base16-gruvbox-dark-pale.vim ]]; then
+        ln -s $vim_colors/base16-gruvbox-dark-pale.vim \
+            ~/.vim/colors/base16-gruvbox-dark-pale.vim
     else
         echo 'Color scheme already exists'
     fi
+    unset vim_colors
 
     # Set up statsline and tabline
     [[ -d $HOME/.vim/plugin/statusbars ]] || mkdir -p $HOME/.vim/plugin/statusbars
 
-    if [[ ! -e "$HOME/.vim/plugin/statusbars/statusline.vim" ]]; then
-        ln -s "$PWD/editor/.vim/plugin/statusbars/statusline.vim" \
-            "$HOME/.vim/plugin/statusbars/statusline.vim"
-    else
-        echo 'You already have a statusline.vim'
-    fi
+    # Link statusline and tabline
+    for line_name in {statusline,tabline}'.vim'; do
+        line_path='.vim/statusbars/'$line_name
 
-    if [[ ! -e "$HOME/.vim/plugin/statusbars/tabline.vim" ]]; then
-        ln -s "$PWD/editor/.vim/plugin/statusbars/tabline.vim" \
-            "$HOME/.vim/plugin/statusbars/tabline.vim"
-    else
-        echo 'You already have a tabline.vim'
-    fi
+        [[ -e ~/$line_path ]] && echo 'You already have a' $line_name \
+        || ln -s $PWD/editor/$line_path ~/$line_path
+
+        unset line_path
+    done
 fi
+
+# Alacritty config setup
+alacritty_p=~/'.config/alacritty'
+acry_conf=$alacritty_p'/alacritty.yml'
+[[ -d $alacritty_p ]] || mkdir -p $alacritty_p
+[[ -e $acry_conf ]] || ln -s $PWD/gui/alacritty/alacritty.yml $acry_conf
+unset acry_conf
+unset alacritty_p
 
 
 # Make a "safe" routing directory
@@ -108,7 +84,7 @@ unset safe
 read -p 'Would you like to install external packages? [y/N] ' -r
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    packages=('git' 'bat' 'nvim' 'tree' 'github' 'exa')
+    packages=('git' 'bat' 'nvim' 'tree' 'github' 'exa' 'alacritty')
 
     # Find supported package manager
     if command -v pacman &> /dev/null; then
