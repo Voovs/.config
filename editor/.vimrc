@@ -134,9 +134,10 @@ set termguicolors " Actual colors
 " Language specific
 " ====================================================={{{
 autocmd Filetype rust set colorcolumn=100
-autocmd Filetype markdown set wrap
-autocmd Filetype markdown set linebreak " Wrap on words
-autocmd Filetype markdown set spell " Noticable slowdown
+autocmd Filetype markdown setlocal spell wrap linebreak
+
+" Break lines at 80 chars like gq
+au BufRead,BufNewFile *.md setlocal textwidth=80
 
 au Filetype python iabbrev <buffer> #! #!/usr/local/bin/python3
 " Bug fix for python interpreter seeing #!.../python3^M
