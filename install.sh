@@ -13,9 +13,7 @@ fi
 # Softlinks bash dotfiles
 read -p 'Try to softlink bash dotfiles? [Y/n] ' -r
 if [[ ! $REPLY =~ ^[Nn] ]]; then
-    dotfiles={bash_profile,bash_env,bash_aliases,bash_prompt,bash_functions}
-
-    for file in .$dotfiles; do
+    for file in .{bash_profile,bash_env,bash_aliases,bash_prompt,bash_functions}; do
         if [[ ! -e ~/$file ]]; then
             ln -s $PWD'/shell/bash/'$file ~/$file
         else
@@ -30,6 +28,17 @@ fi
 # Sets up colorscheme and useful plugin files
 read -p 'Would you like to softlink vim configs? [Y/n] ' -r
 if [[ ! $REPLY =~ ^[Nn]$ ]]; then
+    # Link vimrc
+    [[ -e ~/.vimrc ]] || ln -s $PWD/editor/.vimrc ~/.vimrc
+
+    # Link neovim configs
+    nvim_path=~/'.config/nvim'
+    nvim_conf=$PWD'/editor/nvim'
+    nvim_init=$nvim_path'/init.vim'
+    [[ -d $nvim_path ]] || mkdir -p $nvim_path
+    [[ -e $nvim_init ]] || ln -s $nvim_conf/init.vim $nvim_init
+    unset nvim_init; unset nvim_conf; unset nvim_path
+
     # Link vim colorscheme
     vim_colors=$PWD'/editor/.vim/colors'
     if [[ ! -d ~/.vim/colors ]]; then
@@ -60,6 +69,7 @@ if [[ ! $REPLY =~ ^[Nn]$ ]]; then
     fi
 fi
 
+
 # Alacritty config setup
 alacritty_p=~/'.config/alacritty'
 acry_conf=$alacritty_p'/alacritty.yml'
@@ -78,7 +88,12 @@ unset alacritty_p
 # projects concurrently
 safe=~/'.safe_house/safe'
 [[ -d $safe ]] || mkdir -p ~/.safe_house/safe
-[[ -e $safe/configs ]] || ln -s $PWD $safe/configs
+if [[ ! -e $safe/configs ]]; then
+    ln -s $PWD $safe/configs
+else
+    echo 'Failed to link configs in routing directory'
+    echo 'Aliases from notes won'"'"'t work. Remove them from ~/.bash_aliases'
+fi
 unset safe
 
 

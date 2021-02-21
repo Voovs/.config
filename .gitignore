@@ -2,3 +2,4 @@
 # https://github.com/alacritty/alacritty/releases
 alacritty/config_reference.yml
 shell/bash/old.bashrc
+*.swp
