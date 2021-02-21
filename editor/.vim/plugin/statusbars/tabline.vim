@@ -90,4 +90,4 @@ function! WeatherCondition(forecast)
     endif
 endfunction
 
-call Weather()
+"call Weather()

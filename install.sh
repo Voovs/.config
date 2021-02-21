@@ -31,7 +31,7 @@ fi
 read -p 'Would you like to softlink vim configs? [Y/n] ' -r
 if [[ ! $REPLY =~ ^[Nn]$ ]]; then
     # Link vim colorscheme
-    vim_colors=$PWD'/editor/vim/colors'
+    vim_colors=$PWD'/editor/.vim/colors'
     if [[ ! -d ~/.vim/colors ]]; then
         ln -s $vim_colors ~/.vim/colors
     elif [[ ! -e ~/.vim/colors/base16-gruvbox-dark-pale.vim ]]; then
@@ -43,17 +43,21 @@ if [[ ! $REPLY =~ ^[Nn]$ ]]; then
     unset vim_colors
 
     # Set up statsline and tabline
-    [[ -d $HOME/.vim/plugin/statusbars ]] || mkdir -p $HOME/.vim/plugin/statusbars
+    if [[ ! -d ~/.vim/plugin ]]; then 
+        ln -s $PWD'/editor/.vim/plugin' ~/.vim/plugin
+    else
+        [[ -d ~/.vim/plugin/statusbars ]] || mkdir -p ~/.vim/plugin/statusbars
 
-    # Link statusline and tabline
-    for line_name in {statusline,tabline}'.vim'; do
-        line_path='.vim/statusbars/'$line_name
+        # Link statusline and tabline
+        for line_name in {statusline,tabline}'.vim'; do
+            line_path='.vim/plugin/statusbars/'$line_name
 
-        [[ -e ~/$line_path ]] && echo 'You already have a' $line_name \
-        || ln -s $PWD/editor/$line_path ~/$line_path
+            [[ -e ~/$line_path ]] && echo 'You already have a' $line_name \
+            || ln -s $PWD/editor/$line_path ~/$line_path
 
-        unset line_path
-    done
+            unset line_path
+        done
+    fi
 fi
 
 # Alacritty config setup
