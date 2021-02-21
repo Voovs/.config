@@ -32,3 +32,17 @@ if command -v nvim &> /dev/null
 then
     alias n='nvim'
 fi
+
+# Alias to routing directory
+alias safe='cl ~/.safe_house/safe'
+
+# Quickly read notes. Depends on fn from .bash_functions
+if command -v bless &> /dev/null
+then
+    alias unix_notes='bless /Users/vselin/.safe_house/safe/configs/notes/unix_notes.md'
+    alias good_reads='bless /Users/vselin/.safe_house/safe/configs/notes/reads.md'
+    alias git_notes='bless /Users/vselin/.safe_house/safe/configs/notes/git_notes.md'
+    alias rust_ref='bless /Users/vselin/.safe_house/safe/configs/notes/rust_ref.md'
+    alias util_notes='bless /Users/vselin/.safe_house/safe/configs/notes/utility_notes.md'
+    alias vim_notes='util_notes'
+fi

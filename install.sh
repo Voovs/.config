@@ -67,7 +67,7 @@ if [[ ! $REPLY =~ ^[Nn]$ ]]; then
         ln -s "$PWD/editor/.vim/colors/base16-gruvbox-dark-pale.vim" \
             "$HOME/.vim/colors/base16-gruvbox-dark-pale.vim"
     else
-        echo 'Color scheme already exists!'
+        echo 'Color scheme already exists'
     fi
 
     # Set up statsline and tabline
@@ -96,53 +96,11 @@ fi
 # navigation, one finger per key on the left hand, and allows you to setup
 # temporary softlinks with easy.  I use this a lot when I'm working on several
 # projects concurrently
-read -p 'Would you like to set up a routing point "safe" directory? [y/N] ' -r
+safe=~/'.safe_house/safe'
+[[ -d $safe ]] || mkdir -p ~/.safe_house/safe
+[[ -e $safe/configs ]] || ln -s $PWD $safe/configs
+unset safe
 
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    [[ -d ~/.safe_house/safe ]] || mkdir -p ~/.safe_house/safe
-
-    # Make a link to configs in routing directory
-    ln -s $PWD ~/.safe_house/safe
-
-    # Setup alias for safe
-    {
-        echo
-        echo '# Alias to routing directory'
-        echo 'alias safe='"'"'cl ~/.safe_house/safe'"'"''
-    } >> ~/.bash_aliases
-
-    # Start in routing directory on login
-    {
-        echo
-        echo '# Start in routing directory on login'
-        echo 'safe'
-    } >> ~/.bash_profile
-    echo 'You'"'"'ll start in `~/.safe_house/safe`'
-fi
-
-
-# Aliases for quickly viewing notes
-#
-# These aliases are great when you need to quickly reference something, instead
-# of doing any intensive reading. This is the only instance I see notes being
-# more useful than an online search
-read -p 'Would you like aliases for accessing notes? [y/N] ' -r
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    # Append aliases with comments
-    {
-        echo
-        echo '# Quickly read notes. Depends on fn from .bash_functions'
-        echo "if command -v bless &> /dev/null"
-        echo 'then'
-        echo "    alias unix_notes='bless $PWD/notes/unix_notes.md'"
-        echo "    alias good_reads='bless $PWD/notes/reads.md'"
-        echo "    alias git_notes='bless $PWD/notes/git_notes.md'"
-        echo "    alias rust_ref='bless $PWD/notes/rust_ref.md'"
-        echo "    alias util_notes='bless $PWD/notes/utility_notes.md'"
-        echo "    alias vim_notes='util_notes'"
-        echo 'fi'
-    } >> ~/.bash_aliases
-fi
 
 # ==========================================================
 # External dependencies
