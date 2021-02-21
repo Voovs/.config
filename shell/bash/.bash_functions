@@ -1,5 +1,5 @@
 function cl () {
-    cd "$@" && ls -lhSrG
+    cd "$@" && ll
 }
 
 # Colored pagenation. Requires the `bat` pagenator

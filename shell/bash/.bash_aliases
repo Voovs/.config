@@ -9,9 +9,10 @@ alias lgrep='ll -a | grep -i'
 alias mem='top -l 1 -s 0 | grep PhysMem'
 alias actlive='top -n 10 -o cpu -s 4 -i 100 -U vselin'
 
-# ls on macOS is too old to support --color
 if [[ `uname` == 'Linux' ]]; then
+    # ls on macOS is too old to support --color
     alias ll='ls -lhSrG --color'
+    alias vi='vim'
 fi
 
 # Git
