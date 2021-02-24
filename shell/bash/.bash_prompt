@@ -1,39 +1,44 @@
+# truecolor support gives rgb 255/255/255
+# [${bg};2;${red};${green};${blue};${m
+PS1='\[\033[38;5;175;01m\]'
+[[ $COLORTERM == 'truecolor' ]] || PS1='\[\033[38;2;211;134;155;1m\]'
+
 if [[ -n $SSH_TTY ]] || [[ -n $SSH_CLIENT ]]; then
     # [hostname]currdir user $
     # [Annas-Archangel]configs vselin $
-    PS1='\[\e[0;01m\][\h]\[\e[38;5;225m\]\W \[\e[0;01m\]\u \$\[\e[m\] '
-elif [ -f ~/.git-prompt.bash ]; then
-    source ~/.git-prompt.bash
+    PS1+='[\h]:'
 
-    #     ttys:currdir gitbranch$
-    #     ttys000:configs master$
-    # When not in a git repo:
-    #     ttys:currdir $
-    #     ttys000:safe $
     if [[ $COLORTERM == 'truecolor' ]]; then
-        # truecolor support gives rgb 255/255/255
-        # [${bg};2;${red};${green};${blue};${m
-        PS1='\[\033[38;2;211;134;155;1m\]$(tty | cut -c6-12):'
-        # Working directory in orange
         PS1+='\[\033[38;2;250;189;47;1m\]\W '
-        # Git branch in red
-        PS1+='\[\033[38;2;215;95;95;1m\]$(__git_ps1 "(%s)")'
-        # $ in standard color
-        PS1+='\[\e[m\]\$ '
-        export PS1
     else
-        PS1='\[\e[38;5;175;01m\]$(tty | cut -c6-12):'
-        # Working directory in orange
-        PS1+='\[\e[38;5;214m\]\W '
-        # Git branch in red
-        PS1+='\[\e[38;5;167m\]$(__git_ps1 "(%s)")'
-        # $ in standard color
-        PS1+='\[\e[m\]\$ '
+        PS1+='\[\e[38;5;214;1m\]\W '
+    fi
+
+    if [[ $COLORTERM == 'truecolor' ]] && [[ ! -f ~/.git-prompt.bash ]]; then
+        PS1+='\[\e[38;5;167m\]\u '
     fi
 else
-    # user: currdir $
-    # vselin: safe $
-    PS1='\[\033[38;5;175;01m\]\u: \[\033[38;5;214m\]\W \[\e[m\]\$ '
+    #     ttys:currdir $
+    #     ttys000:safe $
+    # With git prompt:
+    #     ttys:currdir gitbranch$
+    #     ttys000:configs master$
+    PS1='$(tty | cut -c6-12):'
+    # Working directory in orange
+    if [[ $COLORTERM == 'truecolor' ]]; then
+        PS1+='\[\033[38;2;250;189;47;1m\]\W '
+    else
+        PS1+='\[\e[38;5;214;1m\]\W '
+    fi
 fi
+
+if [ -f ~/.git-prompt.bash ]; then
+    # Current git branch
+    source ~/.git-prompt.bash
+    PS1+='\[\e[38;5;167m\]$(__git_ps1 "(%s)")'
+fi
+
+# $ in standard color
+PS1+='\[\e[m\]\$ '
 
 export PS1
