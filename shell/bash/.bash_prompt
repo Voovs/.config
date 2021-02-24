@@ -23,7 +23,7 @@ else
     # With git prompt:
     #     ttys:currdir gitbranch$
     #     ttys000:configs master$
-    PS1='$(tty | cut -c6-12):'
+    PS1+='$(tty | cut -c6-12):'
     # Working directory in orange
     if [[ $COLORTERM == 'truecolor' ]]; then
         PS1+='\[\033[38;2;250;189;47;1m\]\W '
