@@ -1,4 +1,8 @@
 # Programming reads!
+### Shell
+    https://dwmkerr.com/effective-shell-part-1-navigating-the-command-line/
+Tutorial style blog for software development. Notably, his Effective Shell
+series is great
 ### Rust focus
     https://matklad.github.io/
 Blog about rust and other programming stuff. Pretty technical, though has a

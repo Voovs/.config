@@ -4,6 +4,6 @@ function cl () {
 
 # Colored pagenation. Requires the `bat` pagenator
 function bless () {
-    bat "$@" --color=always $1 | less -r
+    bat --color=always $1 | less -r
 }
 

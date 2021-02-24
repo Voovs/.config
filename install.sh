@@ -103,7 +103,7 @@ unset safe
 read -p 'Would you like to install external packages? [y/N] ' -r
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    packages=('git' 'bat' 'nvim' 'tree' 'github' 'exa' 'alacritty')
+    packages=('git' 'bat' 'nvim' 'tree' 'github' 'exa' 'alacritty' 'fzf')
 
     # Find supported package manager
     if command -v pacman &> /dev/null; then

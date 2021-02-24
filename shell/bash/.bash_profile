@@ -21,12 +21,10 @@ elif [[ `uname` == 'Linux' ]]; then
 fi
 
 echo
-echo "You've been running for:"; uptime
-echo
 cal
-echo
-echo -n "Welcome: "; id -un | cat | tr -d '\n';
-echo -n " "; tty | cut -c6-12 | cat
+# Welcome: username ttys###
+# Welcome: vselin ttys000
+echo "Welcome: $(id -un | cat | tr -d '\n') $(tty | cut -c6-14 | cat)"
 echo 
 
 
@@ -36,4 +34,4 @@ echo
 # export PATH
 
 # Start in routing directory on login
-safe
+cd ~/.safe_house/safe
