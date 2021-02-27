@@ -123,6 +123,7 @@ set guifont=Menlo\ Regular:h16
 
 " Syntax theme
 set background="dark"
+set t_Co=256
 let base16colorspace=256
 colorscheme base16-gruvbox-dark-pale " From base16 vim repo
 syntax on

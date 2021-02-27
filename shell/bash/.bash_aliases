@@ -5,7 +5,6 @@ shopt -s expand_aliases
 alias ll='ls -lhSrG '
 alias home='cd ~'
 alias h='history'
-alias lgrep='ll -a | grep -i'
 alias mem='top -l 1 -s 0 | grep PhysMem'
 alias actlive='top -n 10 -o cpu -s 4 -i 100 -U vselin'
 
@@ -29,9 +28,15 @@ alias df='df -h'
 alias du='du -h'
 alias mkdir='mkdir -p'
 
+# External programs
 if command -v nvim &> /dev/null
 then
     alias n='nvim'
+fi
+
+if command -v tmux &> /dev/null
+then
+    alias ta='tmux attach'
 fi
 
 # Alias to routing directory

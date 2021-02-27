@@ -47,7 +47,7 @@ colors:
 
   # Brighter colors by default! May be too bright
   normal:
-    black:   '#928374'
+    black:   '#282828'
     red:     '#fb4934'
     green:   '#b8bb26'
     yellow:  '#fabd2f'
@@ -158,3 +158,5 @@ key_bindings:
   - { key: N, mods: Command,           action: SpawnNewInstance}
   - { key: W, mods: Command,           action: Quit}
   - { key: K, mods: Command,           chars: "\x08k"}
+  # let tmux see C-Space
+  - { key: Space, mods: Control, chars: "\x00" }
