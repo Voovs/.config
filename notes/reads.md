@@ -1,8 +1,18 @@
 # Programming reads!
+### Uncategorized
+    https://mzucker.github.io/
+Machine learning blog. Has an article for solving
+    http://www.ilikebigbits.com/index.html
+Blog touching on programming in general, written by an industry expert
+    https://marksaroufim.medium.com/machine-learning-the-great-stagnation-3a0f044e17e0
+Another ML blog, looking social aspects of programming machines
 ### Shell
     https://dwmkerr.com/effective-shell-part-1-navigating-the-command-line/
 Tutorial style blog for software development. Notably, his Effective Shell
 series is great
+    https://www.rockyourcode.com/
+Blog has several articles on shell usage. What makes it unique is being written
+by a tax officer and a very nice dark mode
 ### Rust focus
     https://matklad.github.io/
 Blog about rust and other programming stuff. Pretty technical, though has a
