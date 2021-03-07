@@ -28,19 +28,29 @@ fi
 # Sets up colorscheme and useful plugin files
 read -p 'Would you like to softlink vim configs? [Y/n] ' -r
 if [[ ! $REPLY =~ ^[Nn]$ ]]; then
+    # Make a vim directory
+    [[ -d ~/.vim ]] || ln -s $PWD/editor/.vim ~
+
+    editor_dir=$PWD'/editor'
+
     # Link vimrc
-    [[ -e ~/.vimrc ]] || ln -s $PWD/editor/.vimrc ~/.vimrc
+    [[ -e ~/.vimrc ]] || ln -s $editor_dir/.vimrc ~/.vimrc
+
+    # Link common vim config file
+    cvim='/.vim/common_init.vim'
+    [[ -e ~/${cvim} ]] || ln -s ${editor_dir}${cvim} ~/.vim
 
     # Link neovim configs
     nvim_path=~/'.config/nvim'
-    nvim_conf=$PWD'/editor/nvim'
     nvim_init=$nvim_path'/init.vim'
+    nvim_conf=$editor_dir'/nvim'
     [[ -d $nvim_path ]] || mkdir -p $nvim_path
     [[ -e $nvim_init ]] || ln -s $nvim_conf/init.vim $nvim_init
+    [[ -e $nvim_path/plugin ]] || ln -s $editor_dir/.vim/plugin $nvim_path
     unset nvim_init; unset nvim_conf; unset nvim_path
 
     # Link vim colorscheme
-    vim_colors=$PWD'/editor/.vim/colors'
+    vim_colors=$editor_dir'/.vim/colors'
     if [[ ! -d ~/.vim/colors ]]; then
         ln -s $vim_colors ~/.vim/colors
     elif [[ ! -e ~/.vim/colors/base16-gruvbox-dark-pale.vim ]]; then
@@ -53,7 +63,7 @@ if [[ ! $REPLY =~ ^[Nn]$ ]]; then
 
     # Set up statsline and tabline
     if [[ ! -d ~/.vim/plugin ]]; then 
-        ln -s $PWD'/editor/.vim/plugin' ~/.vim/plugin
+        ln -s $editor_dir'/.vim/plugin' ~/.vim/plugin
     else
         [[ -d ~/.vim/plugin/statusbars ]] || mkdir -p ~/.vim/plugin/statusbars
 
@@ -67,6 +77,8 @@ if [[ ! $REPLY =~ ^[Nn]$ ]]; then
             unset line_path
         done
     fi
+
+    unset editor_dir
 fi
 
 

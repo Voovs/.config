@@ -1,9 +1,5 @@
 " Very minimal statusline for vim
-" No plugins beyond vanilla vim 8.0
-
-" Set to only run in normal vim
-" Remove if you aren't using another statusline in gui/neo vim
-if !has('nvim') && !has('gui_running')
+" Supports vanilla vim 8.0 and up
 
     " Always show
 set laststatus=2
@@ -218,5 +214,3 @@ augroup SetStatusLine
 augroup end
 
 " }}}
-
-endif
