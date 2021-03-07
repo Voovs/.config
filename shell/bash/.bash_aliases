@@ -40,7 +40,7 @@ then
 fi
 
 # Alias to routing directory
-alias safe='cl ~/.safe_house/safe'
+alias safe='cd ~/.safe_house/safe; ls'
 
 # Quickly read notes
 # 

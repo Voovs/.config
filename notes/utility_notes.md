@@ -2,12 +2,12 @@
 Vim is a powerful modal text editor shipped with most Unix distributions. Your
 MacOS and Linux system is very likely to already have it installed! This guide
 will discuss how to use this program, though it may be more useful to use it as
-reference documentation, while you get use to using vim's own docs
+reference documentation, while you get use to using Vim's own docs
 
 ## Introduction and Q & A
-Who is vim for?
+Who is Vim for?
 
-While vim's use cases are nearly endless, it's mostly used for editing code and
+While Vim's use cases are nearly endless, it's mostly used for editing code and
 taking notes. It will particularly appeal to programmers looking to get off GUI
 text editors and just do everything from a terminal. Vim has many great selling
 points to be your non-GUI editor:
@@ -18,39 +18,39 @@ points to be your non-GUI editor:
  - Shipped with most Unix systems, so you can often use it on others' devices
  - Immense community backing
 
-Strangely vim also happens to be one of the best solutions to taking typed
+Strangely Vim also happens to be one of the best solutions to taking typed
 notes, once configured correctly. This mostly comes don't to not needing a mouse
 and really easy key bindings. If you're interested in that, you'll want to look
-at plugins such as `vimwiki` right away
+at plugins such as `Vimwiki` right away
 
 Is it faster?
 
 Yes. 
 
-Although it'll vary based on the person, using vim will generally make you so
+Although it'll vary based on the person, using Vim will generally make you so
 much faster, when you already know what you're doing. Especially for anyone
-constantly in command like, a non-GUI vim makes you feel like you're typing
+constantly in command like, a non-GUI Vim makes you feel like you're typing
 faster than you're thinking, which feels really nice
 
 How's the transition?
 
-Transitioning to vim, when you've only ever used IDE style text editors isn't a
+Transitioning to Vim, when you've only ever used IDE style text editors isn't a
 quick process. It'll take 1-2 weeks of daily usage to regain you IDE developing
 speed. However, after a month, you'll end up much faster than what the IDE can
 manage across all fronts
 
-If you're considering a vim transition, make sure you have a week or two where
+If you're considering a Vim transition, make sure you have a week or two where
 you don't need to type at top speeds. It'll take more than a week if you're
 still using your IDE editor for faster coding
 
-With that considered. You'll know if vim is the text editor for you. If you're
+With that considered. You'll know if Vim is the text editor for you. If you're
 still unsure, just give it a shot in your spare time and maybe you'll really
 like it!
 
 Disclaimer: Vim will not become your IDE no matter now much you configure it. It
 shouldn't be. Things like multiple cursor editing and file tree navigation are
-done differently in vim. One of the most common mistakes beginners make is
-trying to make vim act identical to their IDE, instead of learning vim's way of
+done differently in Vim. One of the most common mistakes beginners make is
+trying to make Vim act identical to their IDE, instead of learning Vim's way of
 doing things. Vim's way, while initially seeming worse and nonsensical, will
 gradual grown on you until you find it much faster and more intuitive
 
@@ -64,10 +64,10 @@ hit on your keyboard with no prefix. To run any command prompt command, you'll
 first have to open command prompt from normal mode with `:`, so I'll prefix any
 command prompt stuff with `:`
 
-*Exiting vim!!!*
+*Exiting Vim!!!*
     :q
-As one of the most asked questions about vim of all time, exiting vim is not
-that difficult. Just type `:q` from command mode and vim will quit. If you have
+As one of the most asked questions about Vim of all time, exiting Vim is not
+that difficult. Just type `:q` from command mode and Vim will quit. If you have
 written some text and don't want to save it, *just get me out of here!!!*, use
 `:q!` instead
 
@@ -77,30 +77,30 @@ that file. Vim overwrites the current file with its own edited copy, which is
 where the name comes from. It's the equivalent of an IDE `ctrl + s`
 
     :x
-Write to the file, there there were any changes, then quit vim. A great shortcut
+Write to the file, there there were any changes, then quit Vim. A great shortcut
 for when you're quickly editing one file
-    
+
     :help help
-Type `:help` followed by a topic to open the vim help docs on that topic! Super
+Type `:help` followed by a topic to open the Vim help docs on that topic! Super
 useful for both beginners and pros, though you may want to consider googling for
 help if you don't know what to search for yet
 
 ## Motion
-Motion is core to vim. You'll be using it to navigate around your code and
+Motion is core to Vim. You'll be using it to navigate around your code and
 executing commands on that code. In general, you can put any motion in from of
 any motion-operator command. These will become clear shortly. You can also put a
 number `N` before any motion to multiply that motion `N` times
 
-Since motions are used so frequently, most vim configurations remap these to the
+Since motions are used so frequently, most Vim configurations remap these to the
 user's liking. When starting to remap keys, begin with motion operators, since
 you'll find they speed a lot!
 
       k
     h   l
       j
-These 4 keys are core to vim. Think of them like arrow keys, since that's what
-they're going to replace. You should almost NEVER use the arrow keys in vim. In
-fact it's suggested that vim beginners disable the arrow keys in vim
+These 4 keys are core to Vim. Think of them like arrow keys, since that's what
+they're going to replace. You should almost NEVER use the arrow keys in Vim. In
+fact it's suggested that Vim beginners disable the arrow keys in Vim
 
     0  move start of line
     b  move back one word
@@ -140,7 +140,7 @@ Move to old/previous cursor position
 Move to next cursor position
 
 #### Querying
-You can do a ^f like query in vim. In fact it's much more powerful
+You can do a ^f like query in Vim. In fact it's much more powerful
     /foobar
 Searches can also be used as motion operators! Very useful for deleting parts of
 a prose line
@@ -215,15 +215,15 @@ times, use this operator in visual line mode and a number `N>>`
 ## Insert mode, Replace mode, and deletion commands
 #### Insert mode
 Insert mode is the default mode for almost every other text processor. Only
-vim starts in "normal" mode. As you use vim, you'll see why insert mode is often
+Vim starts in "normal" mode. As you use Vim, you'll see why insert mode is often
 too limited in its functionality, though of course you'll still be using it all
 the time
 
 *Exiting insert mode*
 Before moving on, it's really important to know how to get out of insert mode
-and back to normal mode. By default, vim maps `<ESC>` and `<C-[>` as ways to
+and back to normal mode. By default, Vim maps `<ESC>` and `<C-[>` as ways to
 escape insert mode, except both of these really really suck. The one and only
-configuration someone who's never used vim must do is remap this escape key.
+configuration someone who's never used Vim must do is remap this escape key.
 Consider looking online for some idea on how to do this, though the one I use
 looks something like:
     inoremap <C-k> <ESC>
@@ -259,14 +259,14 @@ inside insert mode instead
     [N]y{motion}
 Copy text up using the motion. Refer to the [motions section](#Motion) for which
 motions you can use. This is also compatible with visual mode. You can access
-vim's clipboard in the unnamed register `"` which you can view with `:echo @"`
+Vim's clipboard in the unnamed register `"` which you can view with `:echo @"`
 
 The `N` can be any number and will multiply the motion that many times
 
     yy
 Copies current line. Very useful when used like `2yy` to grab several lines
     p
-Paste from vim's clipboard. Keep in mind this only works in normal mode! Remap
+Paste from Vim's clipboard. Keep in mind this only works in normal mode! Remap
 some key bindings to avoid this restriction:
     inoremap <C-p> <ESC>pi
 
@@ -275,17 +275,18 @@ Pastes content of clipboard at current indentation level
 
 #### Deleting
 Anything you delete will automatically be copied. Keep this in mind, since
-this can overwrite vim's clipboard!
+this can overwrite Vim's clipboard! To access the backup clipboard use register
+0
 
     d{motion}
 While you can use backspace from insert mode to delete characters, that's really
 inefficient and slow for anything beyond a few characters. The `d` operator is
 used much like the `y` operator, except for deletion. Keep in mind that `d` will
-also copy the text it deletes, which overwrites vim's clipboard
+also copy the text it deletes, which overwrites Vim's clipboard
     d0  Delete to start of line
     dw  Delete the next word
 Some examples of common operator usage
-    x 
+    x
 Deletes the next character. Identical to `dl`. `X` is similar though more
 familiar, as it looks like backspace
     D
@@ -295,15 +296,15 @@ Delete current line. Incredibly useful when paired with visual line mode and
 multiplying, such as `4dd`
 
 #### Undo and Redo
-To make make sure you can delete with confidence, vim has a very effective
+To make make sure you can delete with confidence, Vim has a very effective
 undo/redo system
     u
 Undo the last action. Like `ctrl + z` except easier to hit and actually works in
-vim
+Vim
     <C-r>
 Redo next action. Helpful for checking what change you just made with `u`
 
-You should also note that vim doesn't automatically save things. If you really
+You should also note that Vim doesn't automatically save things. If you really
 messed up a file, just exit with `:q!` or `:bd!` which won't save any changes
 done to the file. If all else fails, `git checkout <file>`, though that's a
 really rare situation
@@ -314,7 +315,7 @@ almost everything from visual mode can be done via motions, visual mode allows
 for a greater degree of control, particularly when making very large motions
     v
 The first visual mode is just called visual. It acts exactly like a mouse
-selecting text. Of course you can move with the usual vim motion keys
+selecting text. Of course you can move with the usual Vim motion keys
     V
 Selects entire lines. You'll probably be using this one the most for code
     <C-v>
@@ -339,19 +340,19 @@ Disables search highlighting until next search
 
 ## Vim's display system
 #### Buffers
-Buffers are open files in vim. You can think of them like browser tabs.
+Buffers are open files in Vim. You can think of them like browser tabs.
 They're always there, though you may not be able to see the content of all
-the tabs at once. Like some browsers, vim doesn't tie down buffers to any one
+the tabs at once. Like some browsers, Vim doesn't tie down buffers to any one
 specific window, meaning you can open the same buffer in different windows
     set hidden
-Put that in your .vimrc to not go insane
+Put that in your .Vimrc to not go insane
     :ls :buffers :files
 Lists all active, inactive and hidden buffers
     :bnext :bprev :buffer $NAME :buffer$NUM
 Switches buffer
     <C-O> || <C-I>
 Commands to jump to old/next cursor positions. If the old/next cursor position
-is is another buffer, vim will switch buffers
+is is another buffer, Vim will switch buffers
     :e $PATH :edit $PATH
 Opens a new buffer for the file. Since this is incredibly slow and common, check
 out the fzf plugin to make this ridiculously fast
@@ -360,7 +361,7 @@ out the fzf plugin to make this ridiculously fast
 Windows can roughly be thought of as browser windows. You can change tabs and
 sites all you want, though the browser window doesn't move. Vim windows are a
 set space providing a viewport into a buffer. Much like switching browser
-tabs, vim windows aren't tied to any one specific buffer
+tabs, Vim windows aren't tied to any one specific buffer
     <C-W> s || <C-W> <C-S>
 Splits current window horizontally
     :[N]new $PATH  :[N]sp[lit] $PATH
@@ -406,8 +407,106 @@ Go one tab left
     :set number relativenumber
 Gives very nice line numbering, for executing motion commands
 
-    $ vim ~/.vimrc
-On startup, vim will read `~/.vimrc` for commands to run. These include
+    $ Vim ~/.Vimrc
+On startup, Vim will read `~/.Vimrc` for commands to run. These include
+
+### Repetition of actions
+
+As you have already seen, custom key bindings are one of the best ways to make
+repetitive actions quick. Scripting up some functions and linking them to a key
+bind is even better. However, both these methods require preparation. Here we'll
+look at one-time repeats you can write mid-programming
+
+### Registers
+Registers are Vim's internal temporary storage. Copy, pasting, deletion and
+other operators that rely on a global state will often use a register to store
+their data. Scripts and key maps can take advantage of these too
+
+In general, many operators that rely on registers such as `y`, `d`, and `p`
+accept a register as an argument ahead of them like `"0p`. Repitition goes in
+front of the register, like `3"0p`. You can think of default `p` as `1""p`
+
+See `:h registers` for more information
+
+    :reg || :dis
+Lists all the active registers and their contents
+
+    ""
+The unnamed register mirrors the last write to any other register, except the
+void register `"_`. It's also the default register for many operators
+
+    "0
+The yank register. This is the official register `y` writes to, though its
+mirror `""` is often used. Writing directly to `""` also writes to `"0`
+
+    "_
+The void register. Vim's equivalent of /dev/null. When something is
+yanked/deleted here, a copy won't be stored in `""`
+
+    ".  Last inserted text. Read only
+    ":  Last executed command. Read only
+    "%  The path to the current file. Read only
+    "-  Deletes that are less than one line
+    "*  The true system clipboard (if accessible)
+    "+  "Primary" system clipboard. Doesn't work with vanilla vim on MacOS
+    "/  Last search query
+Some useful Vim-assigned registers
+
+    "a
+    "z
+All the registers in between are user or plugin assigned. Reading from these
+registers is case insensitive. However, writing to an uppercase register will
+append to the register, while lowercase will replace
+
+    :let @+ = @%
+You can write to and between registers using this syntax. This shows a case
+where Vim will copy the entire file's contents onto the system clipboard
+
+    <C-r>0
+Incredibly useful way to call registers from insert mode. Particularly for
+pasting! `0` here can be replaced with any other register's name too
+
+    @a
+Execute the register, in this case register `"a`. See [the macros
+section](#Macros) to see this in action
+
+    @:
+Handy macro to rerun last command prompt command. Remember that `":` stores the
+keys sent in the last command prompt execution
+
+#### Macros
+When you need to repeat actions, Vim's simple key mapping system is a great
+solution. However, there are time when you just need to repeat an action 10
+times once. In these cases we can use mapping, except not bother binding it to a
+key. Vim calls these "macros"
+
+See `:h complex-repeat` for more
+
+    q{char}{cmd}q
+Order of recording a macro. `{char}` is any letter and `{cmd}` is any sequence
+of actions, except recording another macro. You'll notice that while recording a
+macro, your actions actually take place, which makes it easier to guarantee your
+macro works as expected
+
+Here's the hidden magic: All this does is throw all the keys you typed into
+register `"{char}`! See it for yourself! You can even paste the macro you
+recorded with `"{char}p`. You might start seeing the power behind this
+
+    [N]@{char}
+Replays macro `{char}` `N` times. This is simply executing the register with the
+macros' name
+
+    @@
+Replays the last played macro
+
+    :let @w = '^rw
+Easily edits the current macro. In this case it'll paste the contents of the
+`"w` register. Don't actually type `^r`, hit <C-r> instead. Make sure you close
+the string with a `'` at the end
+
+Tip: Instead of trying to figure out a complex key mapping, run it as a macro
+then paste the contents of the recorded register (`<C-r>a`) as the key bind
+
 #### Spelling
     :setlocal spell spelllang=en_us
 Enable spellchecking for the local buffer. You probably don't want to enable it
@@ -435,27 +534,27 @@ the first occurrence on every line
     :!{shell command}
     :!ls .
 Vim allows you to run shell commands right from the command prompt! This is
-mostly useful for vim-scripting. I'd recommend suspending vim and just running
+mostly useful for Vim-scripting. I'd recommend suspending Vim and just running
 the command in terminal instead. Tends to do better with output
 
     :[mode]noremap [input] [output]
     :nnoremap <C-k> <ESC>
-Map keybindings! These should go in your `~/.vimrc`, though you can make
-temporary bindings while in vim too
+Map key bindings! These should go in your `~/.Vimrc`, though you can make
+temporary bindings while in Vim too
 
 ## Reading material
-If you're interested in learning even more about vim, check out these readings
-    ~/.vimrc
+If you're interested in learning even more about Vim, check out these readings
+    ~/.Vimrc
 If you're accessing this in the /notes directory off a git branch in my
-configuration files, look around for the vim directory which could give you a
-good idea of how to write a startup file. Otherwise, just checkout some .vimrc
+configuration files, look around for the Vim directory which could give you a
+good idea of how to write a startup file. Otherwise, just checkout some .Vimrc
 online, just as jonhoo's
-    https://learnvimscriptthehardway.stevelosh.com/
-Learn vimscript
-    https://tdaly.co.uk/projects/vim-statusline-generator/
+    https://learnVimscriptthehardway.stevelosh.com/
+Learn Vimscript
+    https://tdaly.co.uk/projects/Vim-statusline-generator/
 Make your own status bar
-    https://github.com/vimwiki/vimwiki/blob/master/README.md
-Really extensive vim plugin for note taking
+    https://github.com/Vimwiki/Vimwiki/blob/master/README.md
+Really extensive Vim plugin for note taking
 
 # Awk the programming language/utility
 ## Recipes
