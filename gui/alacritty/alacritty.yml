@@ -11,12 +11,12 @@ font:
 
     family: MesloLGM Nerd Font  # Use a Nerd-Font for pretty vim statusline
   size: 16.0
-  
+
   offset:
     x: 1
     y: 1
-  glyph_offset:
-    x: 1
+  glyph_offset:  # Aligns powerline fonts
+    x: 0
     y: 1
 
   use_thin_strokes: true

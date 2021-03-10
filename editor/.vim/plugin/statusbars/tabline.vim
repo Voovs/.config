@@ -3,7 +3,9 @@
 " Always display tabline
 set showtabline=2
 
-" TODO
+" ========================================================
+" # TODO Weather notification TODO
+" ====================================================={{{
 function! Weather()
     let l:forecasts = GetForecast()
 
@@ -90,4 +92,91 @@ function! WeatherCondition(forecast)
     endif
 endfunction
 
-"call Weather()
+" }}}
+
+" ========================================================
+" # Tabline highlights
+" ====================================================={{{
+let g:TabLineActive = '#3A3A3A'  " Dark grey
+let g:TabLineActiveBG = '#AFAF00'  " Light green
+let g:TabLineIdle = '#DAB994'  " Warm white
+let g:TabLineIdleBG = '#4E4E4E'  " Light grey
+
+" Updates tabline colors
+function! ReloadTabLineColors()
+    " Active tab
+    execute 'highlight TabLineActiveHL guifg=' . g:TabLineActive . ' guibg=' . g:TabLineActiveBG
+
+    " Inactive (idle) tabs
+    execute 'highlight TabLineIdleHL guifg=' . g:TabLineIdle . ' guibg=' . g:TabLineIdleBG
+
+    " Active <-> Idle tabs transition, for powerline seperator
+    execute 'highlight TabLineActiveToIdleHL guifg=' . g:TabLineActiveBG . ' guibg=' . g:TabLineIdleBG
+    execute 'highlight TabLineIdleToActiveHL guifg=' . g:TabLineIdleBG . ' guibg=' . g:TabLineActiveBG
+endfunction
+
+" }}}
+
+" ========================================================
+" # Build TabLine
+" ====================================================={{{
+
+" Creates visual label/title for a tab
+function! TabLabel(tab_num)
+    let l:tab_label = ''
+
+    " Different highlight for active tab =================
+    if a:tab_num ==# tabpagenr()
+            " Is active tab
+        let l:tab_HL = '%#TabLineActiveHL#'
+        let l:tab_trans_HL = '%#TabLineActiveToIdleHL#'
+        let l:tab_seperator = ''
+    elseif a:tab_num ==# tabpagenr() - 1
+            " Tab right before active tab
+        let l:tab_HL = '%#TabLineIdleHL#'
+        let l:tab_trans_HL = '%#TabLineIdleToActiveHL#'
+        let l:tab_seperator = ''
+    else
+            " Inactive tab not adjacent to active tab
+        let l:tab_HL = '%#TabLineIdleHL#'
+        let l:tab_trans_HL = '%#TabLineIdleHL#'
+        let l:tab_seperator = ''
+    endif
+
+    let l:tab_label .= l:tab_HL
+
+    " Ordered list of buffer ids open in the tab =========
+    let l:buff_list = tabpagebuflist(a:tab_num)
+
+        " Path to first buffer in the tab
+    let l:curr_buff_path = bufname(l:buff_list[0])
+
+        " Truncate file path to tail only
+    let l:tab_title = fnamemodify(l:curr_buff_path, ':t')
+
+    " Tab number, file name, powerline seperator =========
+    let l:tab_label .=
+    \ '  ' . a:tab_num . ' ' . l:tab_title . ' ' . l:tab_trans_HL . l:tab_seperator
+
+    return l:tab_label
+endfunction
+
+
+function! TabLine()
+    call ReloadTabLineColors()
+    let s = ''
+    let curr_n = tabpagenr()
+
+    for i in range(tabpagenr('$'))
+        let i += 1  " Start at index 1
+
+        let s .= '%' . i . 'T'  " Mouse click support
+        let s .= TabLabel(i)  " Visible tab lable
+    endfor
+
+    return s
+endfunction
+
+set tabline=%!TabLine()
+
+" }}}

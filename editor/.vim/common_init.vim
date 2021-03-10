@@ -34,6 +34,11 @@ nnoremap <leader>/ /\c
 " ; as : for commands
 nnoremap ; :
 
+" Repeat last f/F/t/T motion forward
+nnoremap , ;
+vnoremap , ;
+onoremap , ;
+
 " Bash-like jump to start in command prompt
 cnoremap <C-a> <C-b>
 
@@ -225,6 +230,9 @@ let g:fzf_colors =
 " ====================================================={{{
 " Relative numbering, except absolute for current line
 set number relativenumber
+
+" Shows pending command characters
+set showcmd
 
 " Scroll before hitting top or bottom of window
 set scrolloff=2
