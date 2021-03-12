@@ -170,8 +170,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-rooter'
     " Shows line indent guides
 Plug 'Yggdroot/indentLine'
-    " fuzzy searching buffers/files  
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }      
+    " fuzzy searching buffers/files
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
     " Syntactic language support
 Plug 'rust-lang/rust.vim'
@@ -308,7 +308,7 @@ au Filetype python iabbrev <buffer> #! #!/usr/local/bin/python3
 au Filetype python set fileformat=unix
 
     " Indent guides for python
-au Filetype python :IndentLinesToggle
+au Filetype python :IndentLinesEnable
 
 " Motion to construct name
 augroup function_name_movement

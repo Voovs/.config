@@ -70,41 +70,44 @@ function! StatlnMode()
     let l:mode = mode()
 
     if l:mode ==# 'n'
-        let g:StatlnPrimaryColor = '#AFAF00' 
+        let g:StatlnPrimaryColor = '#AFAF00'  " Light green
         let b:mode_str = 'NORMAL'
     elseif l:mode ==# 'i'
-        let g:StatlnPrimaryColor = '#83ADAD' 
+        let g:StatlnPrimaryColor = '#83ADAD'  " Light blue
         let b:mode_str = 'INSERT'
     elseif l:mode ==# 'R'
-        let g:StatlnPrimaryColor = '#D75F5F'
+        let g:StatlnPrimaryColor = '#D75F5F'  " Light red
         let b:mode_str = 'REPLACE'
     elseif l:mode ==# 's'
-        let g:StatlnPrimaryColor = '#85AD85'
+        let g:StatlnPrimaryColor = '#85AD85'  " Turquoise
         let b:mode_str = 'SELECT'
     elseif l:mode ==# 'c'
-        let g:StatlnPrimaryColor = '#85AD85'
+        let g:StatlnPrimaryColor = '#85AD85'  " Turquoise
         let b:mode_str = 'COMMAND'
     elseif l:mode ==# '!'
-        let g:StatlnPrimaryColor = '#85AD85'
+        let g:StatlnPrimaryColor = '#85AD85'  " Turquoise
         let b:mode_str = 'SHELL'
     elseif l:mode ==# 't'
-        let g:StatlnPrimaryColor = '#85AD85'
+        let g:StatlnPrimaryColor = '#85AD85'  " Turquoise
         let b:mode_str = 'TERM'
     elseif l:mode ==# 'v'
-        let g:StatlnPrimaryColor = '#D485AD'
+        let g:StatlnPrimaryColor = '#D485AD'  " Pink/light purple
         let b:mode_str = 'VISUAL'
     elseif l:mode ==# 'V'
-        let g:StatlnPrimaryColor = '#D485AD'
+        let g:StatlnPrimaryColor = '#D485AD'  " Pink/light purple
         let b:mode_str = "V-LINE"
     elseif l:mode ==# "\<C-v>"
-        let g:StatlnPrimaryColor = '#D485AD'
+        let g:StatlnPrimaryColor = '#D485AD'  " Pink/light purple
         let b:mode_str = "V-BLOCK"
     else
-        let g:StatlnPrimaryColor = '#85AD85'
+        let g:StatlnPrimaryColor = '#85AD85'  " Turquoise
         let b:mode_str = 'UNKNOWN'
     endif
-    
+
     call ReloadStatlnColors()
+
+        " You'd think it's infinitely recursive, though it seems to work???
+    set tabline=%!TabLine()
 
     return b:mode_str . ' '
 endfunction
@@ -144,7 +147,7 @@ function! ActiveStatusline()
 
     " Powerline:
     "                    
-    
+
     " Shows git branch, i there is one
     "let b:git_branch = GitBranch()
     "echom b:git_branch[0] ' ' . ' ' . b:git_branch[1]
@@ -196,8 +199,9 @@ function! IdleStatusline()
 
     let &l:stl=''
     let &l:stl.='%#StatlnIdleHL#'  " Background same as editor
-    let &l:stl.='————————— '  " Slight padding on left
+    let &l:stl.='—————————— '  " Left padding to align file name with active stl
     let &l:stl.='%t'  " File basename
+    let &l:stl.=' '  " Align modified symbol with active stl
     let &l:stl.='%{StatlnModified()}'  " File basename
     " if &modified
     "     let &l:stl.=' '  " Indicates modifed buffer
@@ -205,7 +209,9 @@ function! IdleStatusline()
     "     let &l:stl.=' '
     " endif
     let &l:stl.=' '
+
 endfunction
+
 
 augroup SetStatusLine
     autocmd!

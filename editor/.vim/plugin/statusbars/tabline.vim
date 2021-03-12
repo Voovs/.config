@@ -101,9 +101,17 @@ let g:TabLineActive = '#3A3A3A'  " Dark grey
 let g:TabLineActiveBG = '#AFAF00'  " Light green
 let g:TabLineIdle = '#DAB994'  " Warm white
 let g:TabLineIdleBG = '#4E4E4E'  " Light grey
+let g:TabLineBG = '#222222'
 
 " Updates tabline colors
 function! ReloadTabLineColors()
+        " Reload statusline's mode color. Important when tabline is being
+        " reloaded before statusline
+    call StatlnMode()
+
+        " Sync active tab color with statusline's mode color
+    let g:TabLineActiveBG = g:StatlnPrimaryColor
+
     " Active tab
     execute 'highlight TabLineActiveHL guifg=' . g:TabLineActive . ' guibg=' . g:TabLineActiveBG
 
@@ -113,6 +121,10 @@ function! ReloadTabLineColors()
     " Active <-> Idle tabs transition, for powerline seperator
     execute 'highlight TabLineActiveToIdleHL guifg=' . g:TabLineActiveBG . ' guibg=' . g:TabLineIdleBG
     execute 'highlight TabLineIdleToActiveHL guifg=' . g:TabLineIdleBG . ' guibg=' . g:TabLineActiveBG
+
+    " Transition to TabLine background
+    execute 'highlight TabLineActiveToBGHL guifg=' . g:TabLineActiveBG . ' guibg=' . g:TabLineBG
+    execute 'highlight TabLineIdleToBGHL guifg=' . g:TabLineIdleBG . ' guibg=' . g:TabLineBG
 endfunction
 
 " }}}
@@ -129,12 +141,24 @@ function! TabLabel(tab_num)
     if a:tab_num ==# tabpagenr()
             " Is active tab
         let l:tab_HL = '%#TabLineActiveHL#'
-        let l:tab_trans_HL = '%#TabLineActiveToIdleHL#'
+
+        if a:tab_num ==# tabpagenr('$')
+                " Active tab is last tab
+            let l:tab_trans_HL = '%#TabLineActiveToBGHL#'
+        else
+            let l:tab_trans_HL = '%#TabLineActiveToIdleHL#'
+        endif
+
         let l:tab_seperator = ''
     elseif a:tab_num ==# tabpagenr() - 1
             " Tab right before active tab
         let l:tab_HL = '%#TabLineIdleHL#'
         let l:tab_trans_HL = '%#TabLineIdleToActiveHL#'
+        let l:tab_seperator = ''
+    elseif a:tab_num ==# tabpagenr('$')
+            " Last tab and it's idle
+        let l:tab_HL = '%#TabLineIdleHL#'
+        let l:tab_trans_HL = '%#TabLineIdleToBGHL#'
         let l:tab_seperator = ''
     else
             " Inactive tab not adjacent to active tab
@@ -154,25 +178,87 @@ function! TabLabel(tab_num)
         " Truncate file path to tail only
     let l:tab_title = fnamemodify(l:curr_buff_path, ':t')
 
+    let l:click_mark = '%' . a:tab_num . 'T'  " Support for mouse clicks
+
     " Tab number, file name, powerline seperator =========
     let l:tab_label .=
-    \ '  ' . a:tab_num . ' ' . l:tab_title . ' ' . l:tab_trans_HL . l:tab_seperator
+    \ l:click_mark . '  ' . a:tab_num . ' ' . l:tab_title . ' ' . l:tab_trans_HL . l:tab_seperator
 
-    return l:tab_label
+    let s:columns_used += strchars(a:tab_num . l:tab_title . l:tab_seperator) + 4
+
+        " If tabline is not full
+    if &columns - s:columns_used > 0
+        return l:tab_label
+    else
+        return ''
+endfunction
+
+
+" Tab count on the left
+" Clicking it moves jumps to the last tab, except from the last tab, where it
+" jumps to the first tab
+function! TabLineLabel()
+    " Edge case for
+    if tabpagenr() == 1
+        let l:trans_HL = '%#TabLineActiveHL#'
+        let l:tab_seperator = ''
+    else
+        let l:trans_HL = '%#TabLineActiveToIdleHL#'
+        let l:tab_seperator = ''
+    endif
+
+        "TODO: If rapidly clicked, creates new blank
+    if tabpagenr() == tabpagenr('$')
+        let l:click_mark = '%' . 1 . 'T'  " Jump to first tab, when on last tab
+    else
+        let l:click_mark = '%' . tabpagenr('$') . 'T'  " Jump to last tab
+    endif
+
+
+    let l:tab_counter_str = ' Tabs: ' . tabpagenr('$') . ' '
+
+    let l:tab_counter =
+    \ l:click_mark . '%#TabLineActiveHL# Tabs: ' . tabpagenr('$') . ' ' . l:trans_HL . l:tab_seperator
+
+    let s:columns_used += strchars(l:tab_counter_str)
+
+    return l:tab_counter
 endfunction
 
 
 function! TabLine()
     call ReloadTabLineColors()
+
     let s = ''
     let curr_n = tabpagenr()
 
-    for i in range(tabpagenr('$'))
-        let i += 1  " Start at index 1
+    let s:columns_used = 0  " Count to prevent overflow
+    "TODO: implement hidden markers
+    let s:is_hidden_left = 0   " Tabs hidden on the right
+    let s:is_hidden_right = 0  " Tabs hidden on the left
 
-        let s .= '%' . i . 'T'  " Mouse click support
-        let s .= TabLabel(i)  " Visible tab lable
+    let l:tab_counter = TabLineLabel()
+
+        " Tries adding the previous, active, and next tabs before any others
+        " In case of overflow, active tab will be shown
+    if tabpagenr('$') < 3 || tabpagenr() < 3
+        let l:start_iter = 1
+    else
+        let l:start_iter = tabpagenr() - 1  " Tab before active tab
+    endif
+
+        " All tabs after and including the tab before the active tab
+    for i in range(l:start_iter, tabpagenr('$'))
+        let s .= TabLabel(i)  " Visible tab label
     endfor
+
+        " All tabs preceeding the tab before the active tab
+    let l:preceeding_s = ''
+    for i in range(l:start_iter - 1, 1, -1)
+        let l:preceeding_s = TabLabel(i) . l:preceeding_s " Visible tab label
+    endfor
+
+    let s = l:tab_counter . l:preceeding_s . s
 
     return s
 endfunction
