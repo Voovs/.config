@@ -62,7 +62,7 @@ if [[ ! $REPLY =~ ^[Nn]$ ]]; then
     unset vim_colors
 
     # Set up statsline and tabline
-    if [[ ! -d ~/.vim/plugin ]]; then 
+    if [[ ! -d ~/.vim/plugin ]]; then
         ln -s $editor_dir'/.vim/plugin' ~/.vim/plugin
     else
         [[ -d ~/.vim/plugin/statusbars ]] || mkdir -p ~/.vim/plugin/statusbars

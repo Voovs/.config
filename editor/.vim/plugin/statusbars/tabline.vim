@@ -105,9 +105,9 @@ let g:TabLineBG = '#222222'
 
 " Updates tabline colors
 function! ReloadTabLineColors()
-        " Reload statusline's mode color. Important when tabline is being
-        " reloaded before statusline
-    call StatlnMode()
+        " Reloads the statusline's mode color, which is also synchronized with
+        " the tabline's active color
+    call SetGlobalPrimaryColor()
 
         " Sync active tab color with statusline's mode color
     let g:TabLineActiveBG = g:StatlnPrimaryColor
@@ -226,18 +226,16 @@ function! TabLineLabel()
 endfunction
 
 
+" Build and return tabline, with the same hues as the statusline
 function! TabLine()
     call ReloadTabLineColors()
 
-    let s = ''
-    let curr_n = tabpagenr()
-
     let s:columns_used = 0  " Count to prevent overflow
     "TODO: implement hidden markers
-    let s:is_hidden_left = 0   " Tabs hidden on the right
-    let s:is_hidden_right = 0  " Tabs hidden on the left
+    "let s:is_hidden_left = 0   " Tabs hidden on the right
+    "let s:is_hidden_right = 0  " Tabs hidden on the left
 
-    let l:tab_counter = TabLineLabel()
+    let l:tabline_tab_count = TabLineLabel()
 
         " Tries adding the previous, active, and next tabs before any others
         " In case of overflow, active tab will be shown
@@ -248,21 +246,20 @@ function! TabLine()
     endif
 
         " All tabs after and including the tab before the active tab
+    let l:active_onwards = ''
     for i in range(l:start_iter, tabpagenr('$'))
-        let s .= TabLabel(i)  " Visible tab label
+        let l:active_onwards .= TabLabel(i)  " Visible tab label
     endfor
 
         " All tabs preceeding the tab before the active tab
-    let l:preceeding_s = ''
+    let l:preceeding_active = ''
     for i in range(l:start_iter - 1, 1, -1)
-        let l:preceeding_s = TabLabel(i) . l:preceeding_s " Visible tab label
+        let l:preceeding_active = TabLabel(i) . l:preceeding_active " Visible tab label
     endfor
 
-    let s = l:tab_counter . l:preceeding_s . s
-
-    return s
+    return l:tabline_tab_count . l:preceeding_active . l:active_onwards
 endfunction
 
-set tabline=%!TabLine()
+au BufEnter,BufLeave,WinEnter,WinLeave * set tabline=%!TabLine()
 
 " }}}
