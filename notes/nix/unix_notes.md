@@ -1,3 +1,4 @@
+# Shell
 ###### Process priority
 Since the processor must decide priority, it uses a scale from -20 through 20 to
 rank what has priority, with -20 being the highest priority. By default,
@@ -38,3 +39,66 @@ Kills a background job, via identifiers. The `%` is not optional here!
     $ wait %2
 Waits for job identifier `2` to finish. Passing no arguments waits for all
 background jobs
+
+###### Vim editing for shell
+    set -o vi
+Makes bash use vi key binds. Note, this uses `vi` not `vim` bindings. Generally
+this isn't recommended, even for complete vim users
+
+    EDITOR='vim'
+Bash will run the specified command when looking for an editor
+
+    <C-x><C-r>
+Open current shell line in editor. Really powerful for long lines
+
+## Apple corner
+    $ echo 'hello' > pbcopy
+Copies pipe to system clipboard. Very helpful to paste text into other apps
+    $ say 'something'
+Says string with system voice. Not too useful, tho can be quite amusing
+
+
+## Awk the programming language
+    cat input.txt | awk 'length($0) > 2 { print $1 }' > output.txt
+Basic structure of a one line awk program. It starts with some sort of filtering
+mechanism, here a conditional that the line is longer than 2 characters, then
+runs anything in the `{}` if the match succeeds. It's Unix-pipe ready
+
+    BEGIN
+Key word to run `{}` before processing in any lines. Goes in place of a
+filtering mechanism
+    END
+Exactly like begin, except after all the lines have been read
+
+#### Built in functions
+    match($0, /string/)
+Searches for regex `/string/` in `$0` and returns the field number of the match
+or a 0. When it matches something, it'll also set `RSTART` and `RLENGTH` vars
+
+    substr($0, 2, 3)
+Returns a string of the second through fourth character of `$0`
+
+#### Built in variables
+    NR
+Current line's number. Literally "number of reads". Starts at 1
+    NF
+Number of fields in this line. `$NR` expands to the last field's value
+    RSTART
+Field number of last `match()`
+    RLENGTH
+How many characters long the last `match()` was
+
+#### Recipes
+    awk -F '\t' '{ print $0 }' demo.txt
+Searches goes through each tab-separated string in `demo.txt` and prints it to
+stdout out, which can be used in a pipe
+
+    ls -a | awk 'match($NF, /[0-9]+/) { print substr($NF, RSTART, RLENGTH) }' >
+    coffees.nh
+Takes the output of `ls` and checks that the last argument of each line matches
+one or more consecutive numbers. If it does, it'll put those consecutive numbers
+into a file called `coffees.nh`
+
+    awk '!unique[$0]++' duplicates.txt > uniques.txt
+Looks through all the lines in `duplicates.txt` and puts all of them in
+`uniques.txt`, with no duplicate lines being piped

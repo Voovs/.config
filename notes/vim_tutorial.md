@@ -25,7 +25,7 @@ at plugins such as `Vimwiki` right away
 
 Is it faster?
 
-Yes. 
+Yes.
 
 Although it'll vary based on the person, using Vim will generally make you so
 much faster, when you already know what you're doing. Especially for anyone
@@ -80,7 +80,7 @@ where the name comes from. It's the equivalent of an IDE `ctrl + s`
 Write to the file, there there were any changes, then quit Vim. A great shortcut
 for when you're quickly editing one file
 
-    :help help
+    :help
 Type `:help` followed by a topic to open the Vim help docs on that topic! Super
 useful for both beginners and pros, though you may want to consider googling for
 help if you don't know what to search for yet
@@ -113,6 +113,11 @@ fact it's suggested that Vim beginners disable the arrow keys in Vim
 Here are some very convenient motions within a line. You'll find these are some
 of the most frequently used motions for commands
 
+    )  move by sentences
+    }  move by paragraphs
+    ]]  move to next } in the first column
+Inter-line movements. Not too useful in code, though nice for prose texts
+
     gg  start of file
     H   start of visible screen
     M   middle of visible screen
@@ -126,18 +131,20 @@ is a number
     %
 Move to matching delimiter (`({[<>]})`). You can usually use `i(` and such for a
 more useful effect
-    aw  
-Current word and space after it
-    iw
-Current word. "inner word"
-    i( || i{ || i[ || i<
-Inside specified delimiter
+
+    iw  Current word. "inner word"
+    aw  Current word and following space. "a word"
+    is  Current sentence
+    ap  Current paragraph, notably bound by a blank line
+Several handy motions. `a` and `i` are interchangeable, just `a` also includes
+the ending delimiter
+
+    i( || i{ || i[ || i< || i" || i' || i`
+Inside specified delimiter. `a` can replace `i` to include the delimiters
+
     ib
-Inside block. Should pick up first delimiter it finds from the motions above
-    <C-o>
-Move to old/previous cursor position
-    <C-i>
-Move to next cursor position
+    iB
+Inner block. `b` picks up `()` as delimiters and `B` uses `{}`
 
 #### Querying
 You can do a ^f like query in Vim. In fact it's much more powerful
@@ -188,6 +195,7 @@ common spelling mistake in google docs for me
 Sometimes helpful for very long lines, though you may prefer automatic line
 wrapping `set wrap linebreak` paired with &textwidth for prose
 
+See [the marks section](#Marks) for a great optimization
 #### Folding
 Vim supports many types of folding, though you'll almost always stick with
 manual folding. Folding is generally controlled by `z`
@@ -411,7 +419,6 @@ Gives very nice line numbering, for executing motion commands
 On startup, Vim will read `~/.Vimrc` for commands to run. These include
 
 ### Repetition of actions
-
 As you have already seen, custom key bindings are one of the best ways to make
 repetitive actions quick. Scripting up some functions and linking them to a key
 bind is even better. However, both these methods require preparation. Here we'll
@@ -507,6 +514,41 @@ the string with a `'` at the end
 Tip: Instead of trying to figure out a complex key mapping, run it as a macro
 then paste the contents of the recorded register (`<C-r>a`) as the key bind
 
+### Marks
+Tired of scrolling? Well you should be, since Vim's decent scrolling mechanism
+will start to feel incredibly inefficient after a while. Marks solve this by
+allowing you to easily jumped between "marked" points
+
+    m{char}
+Sets a mark named `{char}`. You can have one of each lowercase letter per
+buffer, though only one uppercase of each mark per vim session. This allows
+uppercase marks to be used for buffer switching
+
+    '{char}
+    `{char}
+Jumps to the mark. This is considered a motion, unless you switch buffers. `'`
+moves your cursor to the start of the mark's line, while the backtick moves to
+the exact spot the mark was left at. The two are often reversely remapped
+
+    :marks
+List all marks in the current vim session
+
+    :delm a
+Deletes a mark, in this case `a`. If no arguments are provided, all lowercase
+marks for the current buffer are deleted
+
+Marks are key in many Vim scripts. Here are some special marks:
+    `<  First character of current visual selection
+    `>  Last character of current visual selection
+    ``  Character before the latest jump used for <C-o>
+
+
+    <C-o>
+Move to old/previous cursor position. Uses the \`\` mark
+    <C-i>
+Move to next cursor position
+
+
 #### Spelling
     :setlocal spell spelllang=en_us
 Enable spellchecking for the local buffer. You probably don't want to enable it
@@ -555,14 +597,3 @@ Learn Vimscript
 Make your own status bar
     https://github.com/Vimwiki/Vimwiki/blob/master/README.md
 Really extensive Vim plugin for note taking
-
-# Awk the programming language/utility
-## Recipes
-awk 'END { print NR;}'
-	Counts the lines, for example in a file
-awk '/^[0-9]{2}/ { print NR;}'
-	Prints the line numbers of lines starting
-	with 2 consecutive digits
-awk 'match($0, /[0-9]{6}/) { print substr($0, RSTART, RLENGTH);}'
-	Extracts the first 6-digit number from
-	each line and prints it to stdout
